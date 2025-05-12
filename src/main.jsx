@@ -4,7 +4,7 @@ import './index.css'
 import Carta from './Carta.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  //<StrictMode>
       <Carta />
-  </StrictMode>,
+ // </StrictMode>,
 )

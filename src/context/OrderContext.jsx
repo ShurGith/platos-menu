@@ -8,12 +8,14 @@ export const OrderProvider = ({ children }) => {
         const datosGuardados = localStorage.getItem('cartOrdered');
         return datosGuardados ? JSON.parse(datosGuardados) : [];
     });
+    const [actual, setActual] = useState([]);
 
     useEffect(() => {
         localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
+        setActual(JSON.stringify(orderCart));
     }, [orderCart]);
     
-
+    
     const toOrder = (producto, quantity, price) => {
         const total = quantity * price;
         
@@ -41,11 +43,16 @@ export const OrderProvider = ({ children }) => {
         setOrderCart([]);
     }
 
+    const removeItem = (name) => {
+        setOrderCart((prev) => prev.filter((item) => item.name !== name));
+    };
+    
     return (
         <OrderContext.Provider value={{ 
             orderCart, setOrderCart,
             counter, setCounter,
-            toOrder,clearCart, totalPay }}>
+            toOrder,clearCart, actual,
+            removeItem, totalPay }}>
             {children}
         </OrderContext.Provider>
     );

@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
 import Card from "./Card";
 import Ordered from "./Ordered";
 import { useOrderContext } from "../context/OrderContext";
 import { useProduct } from "../context/ProductoContext";
 function CardsContainer() {
-    const { counter, setCounter } = useOrderContext();
+    const { counter } = useOrderContext();
 
     const { data } = useProduct();
 
