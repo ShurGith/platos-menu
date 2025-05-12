@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import  { createContext, useContext, useEffect, useState } from "react";
 const OrderContext = createContext();
 
@@ -10,13 +11,23 @@ export const OrderProvider = ({ children }) => {
     });
     const [actual, setActual] = useState([]);
 
+
+    function clearCart() {
+        setOrderCart([]);
+    }
+
+    function removeItem(id) {
+        setOrderCart((prev) => prev.filter((item) => item.id !== id));
+        document.getElementById(id).querySelector('img').classList.remove('border-2', 'border-rosado-50')
+    }
+    
     useEffect(() => {
         localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
         setActual(JSON.stringify(orderCart));
     }, [orderCart]);
     
     
-    const toOrder = (producto, quantity, price) => {
+    const toOrder = (id,producto, quantity, price, image) => {
         const total = quantity * price;
         
         setOrderCart((prev) => {
@@ -29,30 +40,22 @@ export const OrderProvider = ({ children }) => {
                     return item;
                 });
             } else {
-                return [...prev, { name: producto, cantidad: quantity, price: price, total: total.toFixed(2) }];
+                return [...prev, {id:id, name: producto, cantidad: quantity, price: price, total: total.toFixed(2), image: image }];
             }
         });
     }
 
-    const totalPay = orderCart.reduce( (acc, item) => acc + item.total,0);
     useEffect (() => {
         setCounter(orderCart.reduce((acc, item) => acc + item.cantidad, 0));
     }, [orderCart]);       
 
-    const clearCart = () => {
-        setOrderCart([]);
-    }
-
-    const removeItem = (name) => {
-        setOrderCart((prev) => prev.filter((item) => item.name !== name));
-    };
     
     return (
         <OrderContext.Provider value={{ 
             orderCart, setOrderCart,
             counter, setCounter,
-            toOrder,clearCart, actual,
-            removeItem, totalPay }}>
+            toOrder, actual,
+            removeItem, clearCart }}>
             {children}
         </OrderContext.Provider>
     );
