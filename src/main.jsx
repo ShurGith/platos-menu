@@ -5,6 +5,6 @@ import Carta from './Carta.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Carta />
+      <Carta />
   </StrictMode>,
 )

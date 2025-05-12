@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 function Ordered() {
-    const [data, setData] = useState(null);
-    useEffect(() => {
-        // Leer datos del localStorage
-        const storedData = localStorage.getItem("cartOrdered");
+    const [data, setData] = useState(false || null);
+    const storedData = localStorage.getItem("cartOrdered");
+
+   /*useEffect(() => {
         if (storedData) {
-            setData(JSON.parse(storedData)); // Convertir de string a objeto/array si es necesario
-        }
-    }, []);
+            setData(storedData.length > 0 ? true : false)     }
+    }, [storedData]);
+*/
+    if (storedData) {
+        setData(storedData.length > 0 ? true : false)
+    }
+
   return (
       <div className="flex flex-col items-center gap-4">
-      {data && <p>{JSON.stringify(data)}</p> }
+          {data && <p>{storedData}</p> }
       {!data && 
       <div className="flex flex-col items-center gap-4">
               <img src="/assets/images/illustration-empty-cart.svg" alt="" />

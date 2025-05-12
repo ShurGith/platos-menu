@@ -1,18 +1,12 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
 import Ordered from "./Ordered";
+import { useOrderContext } from "../context/OrderContext";
+import { useProduct } from "../context/ProductoContext";
 function CardsContainer() {
+    const { counter, setCounter } = useOrderContext();
 
-    const [data, setData] = useState([]);
-    const [counter, setCounter] = useState(0);
-
-    useEffect(() => {
-        fetch('/data/data.json')
-            .then((res) => res.json())
-            .then((json) => setData(json))
-            .catch((err) => console.error('Error al cargar el JSON:', err));
-    }, []);
-
+    const { data } = useProduct();
 
     return (
         <div className="w-full flex flex-col lg:flex-row gap-4 px-18 py-12">

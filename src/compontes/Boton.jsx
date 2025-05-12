@@ -1,21 +1,40 @@
-import  { useState } from 'react'
+import  { useContext, useEffect, useState } from 'react'
+import {  useOrderContext } from '../context/OrderContext'; //useOrderContext  from '../context/OrderContext';
 
 function Boton() {
+
   const [order, setOrder] = useState(false)
   const [cantidad, setCantidad] = useState(0)
+  const { 
+    counter, setCounter,
+    orderCart, setOrderCart,
+    toOrder, clearCart } = useOrderContext();
 
+  //const [name, setName] = useState("");
+   
+
+//toOrder = (producto, cantidad) 
+ 
 
   const controlerLess = (numero,objeto) => {
-    if (cantidad > 0) 
+    if (cantidad > 0){
+      setCounter(counter - 1)
       setCantidad(cantidad - 1)
+    }
     if (numero < 1){
       setOrder(false)
       objeto.closest('[data-clase="cardata"]').querySelector('img').classList.remove('border')
     }
   }
 
+ const controllerMore = () => {
+    setCounter(counter + 1)
+    setCantidad(cantidad + 1)
+  }
+
   const addOrder = (objeto) => {
     setCantidad(1)
+    setCounter(counter + 1)
     setOrder(true)
     objeto.closest('[data-clase="cardata"]').querySelector('img').classList.add('border')
   }
@@ -41,7 +60,7 @@ function Boton() {
         <img 
           className='size-4 border border-rosado-5 rounded-full p-1 cursor-pointer' 
           src="/assets/images/icon-increment-quantity.svg" alt="" 
-          onClick={() => setCantidad(cantidad + 1)}
+          onClick={() => controllerMore()}
           />
       </div>}
 
