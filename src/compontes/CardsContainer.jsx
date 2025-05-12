@@ -4,7 +4,6 @@ import { useOrderContext } from "../context/OrderContext";
 import { useProduct } from "../context/ProductoContext";
 function CardsContainer() {
     const { counter } = useOrderContext();
-
     const { data } = useProduct();
 
     return (
