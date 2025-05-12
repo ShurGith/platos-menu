@@ -3,7 +3,7 @@ import Boton from './Boton'
 function Card({ item }) {
   return (
     <div className='w-full gap-4 flex flex-col items-center px-4'>
-      <div className='relative'>
+      <div className='relative' data-clase='cardata'>
         <img 
         className='w-full rounded-2xl'
         src={item.image.mobile} alt={item.name} />
