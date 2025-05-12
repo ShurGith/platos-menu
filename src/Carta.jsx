@@ -1,8 +1,11 @@
-import React from 'react'
+import CardsContainer from "./compontes/CardsContainer"
 
 function Carta() {
   return (
+    <>
     <div>Carta</div>
+    <CardsContainer />
+    </>
   )
 }
 
