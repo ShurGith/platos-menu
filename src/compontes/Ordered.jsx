@@ -9,7 +9,7 @@ function Ordered() {
     }, [storedData]);
 */
     if (storedData) {
-        setData(storedData.length > 0 ? true : false)
+        //setData(storedData.length > 0 ? true : false)
     }
 
   return (
