@@ -1,39 +1,41 @@
-import  { createContext, useContext, useState } from "react";
+import  { createContext, useContext, useEffect, useState } from "react";
 const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
-    const [name, setName] = useState("Valor inicial");
     const [counter, setCounter] = useState(0);
 
     const [orderCart, setOrderCart] = useState(() => {
-        // Cargar carrito desde localStorage al inicio
         const datosGuardados = localStorage.getItem('cartOrdered');
         return datosGuardados ? JSON.parse(datosGuardados) : [];
-
     });
 
+    useEffect(() => {
+        localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
+    }, [orderCart]);
+    
 
-    const toOrder = (producto, quantity = 1, operacion = false) => {
-        setOrder((prev) => {
-            const intoCart = prev.find((item) => item.id === producto.id);
-            if (intoCart) {
-                operacion ? quantity = -quantity : quantity;
-                return prev.map((item) =>
-                    item.id === producto.id
-                        ? { ...item, cantidad: item.cantidad + quantity }
-                        : item
-                );
+    const toOrder = (producto, quantity, price) => {
+        const total = quantity * price;
+        
+        setOrderCart((prev) => {
+            const existingItem = prev.find((item) => item.name === producto);
+            if (existingItem) {
+                return prev.map((item) => {
+                    if (item.name === producto) {
+                        return { ...item, cantidad: quantity, total: total.toFixed(2) };
+                    }
+                    return item;
+                });
             } else {
-                return [...prev, { ...producto, cantidad: quantity }];
+                return [...prev, { name: producto, cantidad: quantity, price: price, total: total.toFixed(2) }];
             }
         });
     }
 
-
-    const intoCart = (product) => {
-        return toOrder.find(item => item.id === product.id);
-    };
-
+    const totalPay = orderCart.reduce( (acc, item) => acc + item.total,0);
+    useEffect (() => {
+        setCounter(orderCart.reduce((acc, item) => acc + item.cantidad, 0));
+    }, [orderCart]);       
 
     const clearCart = () => {
         setOrderCart([]);
@@ -41,10 +43,9 @@ export const OrderProvider = ({ children }) => {
 
     return (
         <OrderContext.Provider value={{ 
-            name, setName,
             orderCart, setOrderCart,
             counter, setCounter,
-            toOrder,clearCart }}>
+            toOrder,clearCart, totalPay }}>
             {children}
         </OrderContext.Provider>
     );

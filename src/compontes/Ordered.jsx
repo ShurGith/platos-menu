@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
 function Ordered() {
-    const [data, setData] = useState(false || null);
     const storedData = localStorage.getItem("cartOrdered");
+    const [data, setData] = useState(storedData);
 
-   /*useEffect(() => {
-        if (storedData) {
-            setData(storedData.length > 0 ? true : false)     }
-    }, [storedData]);
-*/
-    if (storedData) {
-        //setData(storedData.length > 0 ? true : false)
-    }
 
   return (
       <div className="flex flex-col items-center gap-4">
