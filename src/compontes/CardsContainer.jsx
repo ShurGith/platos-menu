@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
+import Ordered from "./Ordered";
 function CardsContainer() {
 
     const [data, setData] = useState([]);
+    const [counter, setCounter] = useState(0);
 
     useEffect(() => {
         fetch('/data/data.json')
@@ -13,7 +15,9 @@ function CardsContainer() {
 
 
     return (
-        <div className="lg:w-5/6 mx-auto">
+        <div className="lg:w-full flex-col lg:flex-row gap-4 px-4">
+        <div className="border">
+            <h1 className="text-3xl font-siete pt-8 pb-4 ">Desserts</h1>
             <div className="lg:grid lg:grid-cols-3 lg:gap-8 w-full">
             {data &&data.map((item) => (
                 <Card
@@ -21,7 +25,13 @@ function CardsContainer() {
                      item={item} />
             ))}
             </div>
-            <div>Pedidos</div>
+        </div>
+            <div className="min-w-1/3 bg-white h-fit mt-4 rounded-xl py-4 text-center">
+            <h2 className="text-xl  text-rojo font-cinco mb-4 ">
+                Your Cart <span className="font-siete"> ({counter})</span>
+            </h2>
+            <Ordered />
+            </div>
         </div>
     )
 }
