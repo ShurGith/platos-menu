@@ -1,1 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
 @import "tailwindcss";
+
+@theme{
+--color-rojo:hsl(14, 86%, 42%) ;
+--color-verde: hsl(159, 69%, 38%);
+--color-rosado-5: hsl(20, 50%, 98%) ;
+--color-rosado-10: hsl(13, 31%, 94%);
+--color-rosado-30: hsl(14, 25%, 72%);
+--color-rosado-40: hsl(7, 20%, 60%) ;
+--color-rosado-50: hsl(12, 20%, 44%) ;
+--color-rosado-90: hsl(14, 65%, 9%) ;
+
+--font-family: 'Inter', sans-serif;
+
+--text-main: 16px;
+--font-weight-cuatro: 400;
+--font-weight-cinco: 500;
+--font-weight-siete: 700;
+
+}
+body {
+    background-color:var(--color-rosado-10) ;
+    font-family: var(--font-family);
+    font-size: var(--text-main);
+    font-weight: var(--font-weight-cuatro);
+    color: var(--color-rosado-50);
+}
+[data-theme=dark] body {
+    background-color: var(--color-rosado-90);
+}
