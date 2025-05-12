@@ -5,7 +5,8 @@ function Ordered() {
 
     return (
         <div className="flex flex-col items-center gap-4">
-            {hayData && <div>
+            {hayData && 
+            <div className="flex flex-col gap-4 w-full">
                 {data.map((item) => (
                     <div key={item.name} className="flex justify-between items-center w-full">
 
