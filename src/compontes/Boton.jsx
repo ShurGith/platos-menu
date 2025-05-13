@@ -6,13 +6,15 @@ function Boton({ name, price, image, id }) {
 
   const [cantidad, setCantidad] = useState(0)
 
-  const { toOrder, clearCart, removeItem } = useOrderContext();
+  const { toOrder, removeItem, tablesSelect } = useOrderContext();
 
   const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
 
   const chequeProduct = (laId) => {
-    return productosGuardados.find( (producto) => producto.id === laId );
+    if (productosGuardados) 
+       return productosGuardados.find( (producto) => producto.id === laId );
   }
+
 
   const meteClases = (laId,accion) => {
      accion && document.getElementById(laId).querySelector('img').classList.add('border-2', 'border-rosado-50')
@@ -25,6 +27,7 @@ function Boton({ name, price, image, id }) {
     toOrder(laId, name, cantidad + 1, price, image)
     !pasado && meteClases(laId, true)
   }
+
   const removeOrder = (laId) => {
     setCantidad(cantidad - 1)
     toOrder(laId, name, cantidad - 1, price, image)

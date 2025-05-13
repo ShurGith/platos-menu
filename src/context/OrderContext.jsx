@@ -4,17 +4,37 @@ const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
     const [counter, setCounter] = useState(0);
-
+    const [tablesSelect, setTablesSelect] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
+    const [table, setTable] = useState(null);
     const [orderCart, setOrderCart] = useState(() => {
-        const datosGuardados = localStorage.getItem('cartOrdered');
-        return datosGuardados ? JSON.parse(datosGuardados) : [];
+        const primerosDatos = localStorage.getItem('cartOrdered');
+        return primerosDatos ? JSON.parse(primerosDatos) : [];
+  
     });
     const [actual, setActual] = useState([]);
 
+    //const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
 
-    function clearCart() {
-        setOrderCart([]);
-    }
+    /** Mesas */
+
+    const arrayTable = (table) => {
+        setTablesSelect((prevTablesSelect) => {
+            if (prevTablesSelect.includes(table)) {
+                // Si el número está, lo quitamos
+                return prevTablesSelect.filter(n => n !== table);
+                
+            } else {
+                // Si no está, lo añadimos
+               return  [...prevTablesSelect, table];
+            }
+          });         
+
+        //  console.log(tablesSelect); 
+    };
+
+
+
 
     function removeItem(id) {
         setOrderCart((prev) => prev.filter((item) => item.id !== id));
@@ -27,26 +47,26 @@ export const OrderProvider = ({ children }) => {
     }, [orderCart]);
     
     
-    const toOrder = (id,producto, quantity, price, image) => {
+    const toOrder = (table, id, name, quantity, price, image) => {
         const total = quantity * price;
         
         setOrderCart((prev) => {
-            const existingItem = prev.find((item) => item.name === producto);
+            const existingItem = prev.find((item) => item.id === id);
             if (existingItem) {
                 return prev.map((item) => {
-                    if (item.name === producto) {
+                    if (item.id === id) {
                         return { ...item, cantidad: quantity, total: total.toFixed(2) };
                     }
                     return item;
                 });
             } else {
-                return [...prev, {id:id, name: producto, cantidad: quantity, price: price, total: total.toFixed(2), image: image }];
+                return [...prev, {table:table, id:id, name:name, cantidad:quantity, price:price, total:total.toFixed(2), image:image }];
             }
         });
     }
 
     useEffect (() => {
-        setCounter(orderCart.reduce((acc, item) => acc + item.cantidad, 0));
+       setCounter(orderCart.reduce((acc, item) => acc + item.cantidad, 0));
     }, [orderCart]);       
 
     
@@ -54,8 +74,11 @@ export const OrderProvider = ({ children }) => {
         <OrderContext.Provider value={{ 
             orderCart, setOrderCart,
             counter, setCounter,
-            toOrder, actual,
-            removeItem, clearCart }}>
+            toOrder, actual, arrayTable,
+            removeItem, table, setTable,
+            openModal, setOpenModal,
+            tablesSelect, setTablesSelect,
+             }}>
             {children}
         </OrderContext.Provider>
     );

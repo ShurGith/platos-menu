@@ -3,6 +3,7 @@ import Ordered from "./Ordered";
 import ModalOrder from "./ModalOrder";
 import { useOrderContext } from "../context/OrderContext";
 import { useProduct } from "../context/ProductoContext";
+import TablesSelect from "./TablesSelect";
 function CardsContainer() {
     const { counter } = useOrderContext();
     const { data } = useProduct();
@@ -21,11 +22,16 @@ function CardsContainer() {
                         ))}
                     </div>
                 </div>
-                <div className="lg:min-w-1/4  bg-white h-fit mt-4 rounded-xl py-4 ">
-                    <h2 className="text-xl text-center text-rojo font-siete mb-4 ">
-                        Your Cart <span className="font-siete"> ({counter})</span>
-                    </h2>
-                    <Ordered />
+                <div className="lg:min-w-1/4 mt-8 h-fit gap-4 flex flex-col">
+                    <div className="lg:min-w-1/4  bg-white h-fit rounded-xl py-4 ">
+                        <h2 className="text-xl text-center text-rojo font-siete mb-4 ">
+                            Your Cart <span className="font-siete"> ({counter})</span>
+                        </h2>
+                        <Ordered />
+                    </div>
+                    <div className="flex flex-col gap-4 lg:px-6 px-2 py-4">
+                        <TablesSelect />
+                    </div>
                 </div>
             </div>
         </>

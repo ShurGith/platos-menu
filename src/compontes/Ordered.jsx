@@ -6,7 +6,7 @@ function Ordered() {
     const hayData = data && data.length > 0;
     const totalPay = hayData &&data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
 
-    const {removeItem} = useOrderContext();
+    const {removeItem, setOpenModal} = useOrderContext();
 
     return (
         <div className="flex flex-col gap-4 w-full text-main lg:px-6">
@@ -37,7 +37,9 @@ function Ordered() {
                         <img src="/assets/images/icon-carbon-neutral.svg" alt="" />
                         <h4 className= "font-cuatro text-sm text-center"> This is a <span className="font-siete text-xs">carbon-neutral</span> delivery</h4>
                         </div>
-                    <button className="cursor-pointer bg-rojo text-rosado-10 py-2 rounded-full">Confirm Order</button>
+                    <button 
+                    onClick={() => setOpenModal(true)} 
+                    className="cursor-pointer bg-rojo text-rosado-10 py-2 rounded-full">Confirm Order</button>
                 </div>
             }
 
