@@ -1,4 +1,4 @@
-import Boton from './Boton'
+import BottonsOrder from './BottonsOrder'
 
 function Card({ item, numberId}) {
 
@@ -8,7 +8,7 @@ function Card({ item, numberId}) {
         <img 
         className='w-full rounded-2xl'
           src={item.image.desktop} alt={item.name} />
-        <Boton name={item.name} price={item.price} image={item.image.thumbnail} id={numberId} />
+        <BottonsOrder name={item.name} price={item.price} image={item.image.thumbnail} id={numberId} />
       </div>
       <div className='flex flex-col items-start p-4 w-full'>
       <p>{item.category}</p>

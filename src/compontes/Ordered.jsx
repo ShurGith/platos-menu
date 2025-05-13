@@ -1,8 +1,12 @@
 import { useOrderContext } from "../context/OrderContext";
+import { useTablesContext } from "../context/TablesContext";
 
 function Ordered() {
-    const data = JSON.parse(localStorage.getItem('cartOrdered'));
+    const { tableActual } = useTablesContext();
+    const firstData = JSON.parse(localStorage.getItem('cartOrdered'))
+    const data = firstData && firstData.filter((item) => item.table === tableActual);
     const hayData = data && data.length > 0;
+    const totalItems = hayData && data.reduce((acc, item) => acc + item.cantidad, 0);
     const totalPay = hayData &&data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
     
     const {removeItem, setOpenModal} = useOrderContext();

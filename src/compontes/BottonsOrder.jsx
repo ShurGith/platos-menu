@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useOrderContext } from '../context/OrderContext'; //useOrderContext  from '../context/OrderContext';
 import { useTablesContext } from '../context/TablesContext';
-function Boton({ name, price, image, id }) {
+
+
+function BottonsOrder({ name, price, image, id }) {
   const [order, setOrder] = useState(false)
   const [cantidad, setCantidad] = useState(0)
 
@@ -10,9 +12,9 @@ function Boton({ name, price, image, id }) {
 
   const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
 
-  const chequeProduct = (laId) => {
+  const chequeProduct = () => {
     if (productosGuardados) 
-       return productosGuardados.find( (producto) => producto.id === laId );
+       return productosGuardados.find( (item) => (item.table === tableActual && item.id === id));
   }
 
   const meteClases = (laId,accion) => {
@@ -24,7 +26,7 @@ function Boton({ name, price, image, id }) {
     setCantidad(cantidad + 1)
     setOrder(true)
     toOrder(tableActual, laId, name, cantidad + 1, price, image)
-    !pasado && meteClases(laId, true)
+    !pasado && meteClases(laId, true)    
   }
 
   const removeOrder = (laId) => {
@@ -37,8 +39,8 @@ function Boton({ name, price, image, id }) {
   }
 
   useEffect(() => { //Para la recarga de la pagina
-    if(chequeProduct(id)){
-      setCantidad(chequeProduct(id).cantidad) //chequeProduct(id).cantidad 
+    if (chequeProduct(tableActual)){
+      setCantidad(chequeProduct(tableActual).cantidad) //chequeProduct(id).cantidad 
       setOrder(true)
       meteClases(id, true)
     }else{
@@ -77,10 +79,8 @@ function Boton({ name, price, image, id }) {
           onClick={() => addOrder(id,true)} //Sumar una unidad
         />
       </div>}
-
-
     </div>
   )
 }
 
-export default Boton
+export default BottonsOrder

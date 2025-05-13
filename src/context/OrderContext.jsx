@@ -7,56 +7,41 @@ export const OrderProvider = ({ children }) => {
     const [counter, setCounter] = useState(0);
     const [openModal, setOpenModal] = useState(false);
     const [orderCart, setOrderCart] = useState(() => {
-        const primerosDatos = localStorage.getItem('cartOrdered');
-        return primerosDatos ? JSON.parse(primerosDatos) : [];
+        const datosGuardados = localStorage.getItem('cartOrdered');
+        return datosGuardados ? JSON.parse(datosGuardados) : [];
     });
+    const { tableActual } = useTablesContext();
     const [actualOrder, setActualOrder] = useState([]);
-    const { tables } = useTablesContext();
-/*
- function toOrder(table, id, name, quantity, price, image) {
-        const total = quantity * price;
-        const newItem = { id, name, quantity, price, total, image };
-        setOrderCart((prev) => {
-            const existingItem = prev.find((item) => item.id === id);
-            if (existingItem) {
-                return prev.map((item) => {
-                    if (item.id === id) {
-                        return { ...item, quantity: item.quantity + quantity, total: item.total + total };
-                    }
-                    return item;
-                });
-            } else {
-                return [...prev, newItem];
-            }
-        });
-    }
-        */
 
     function removeItem(id) {
-        setOrderCart((prev) => prev.filter((item) => item.id !== id));
+        setOrderCart((prev) => prev.filter((item) => item.id !== id && item.table === tableActual));
         document.getElementById(id).querySelector('img').classList.remove('border-2', 'border-rosado-50')
     }
+
     
+
     useEffect(() => {
+        // Guardar en localStorage cada vez que cambia
         localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
-        setActualOrder(JSON.stringify(orderCart));
+        const filterTable = orderCart.filter((item) => item.table === tableActual);
+        setActualOrder(JSON.stringify(filterTable));
     }, [orderCart]);
-    
+
+
     
     const toOrder = (table, id, name, quantity, price, image) => {
         const total = quantity * price;
-        
-        setOrderCart((prev) => {
-            const existingItem = prev.find((item) => item.id === id);
+       setOrderCart((prev) => {
+           const existingItem = prev.some(item => item.id === id && item.table === table);
             if (existingItem) {
                 return prev.map((item) => {
-                    if (item.id === id) {
+                    if (item.id === id && item.table === table) {
                         return { ...item, cantidad: quantity, total: total.toFixed(2) };
                     }
                     return item;
                 });
             } else {
-                return [...prev, { table: table, id:id, name:name, cantidad:quantity, price:price, total:total.toFixed(2), image:image }];
+                return [...prev, { table:table, id:id, name:name, cantidad:quantity, price:price, total:total.toFixed(2), image:image }];
             }
         });
     }
@@ -69,12 +54,10 @@ export const OrderProvider = ({ children }) => {
     return (
         <OrderContext.Provider value={{ 
             orderCart, setOrderCart,
-            counter, setCounter,
-          //  tableActual, setTableActual,
-            toOrder, actualOrder, //arrayTable,
-            removeItem, //table, setTable,
+            counter,
+            toOrder, actualOrder, setActualOrder,
+            removeItem, 
             openModal, setOpenModal,
-            //tablesSelect, setTablesSelect,
              }}>
             {children}
         </OrderContext.Provider>
