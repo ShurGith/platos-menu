@@ -6,45 +6,44 @@ function Boton({ name, price, image, id }) {
 
   const [cantidad, setCantidad] = useState(0)
 
-  const { counter, setCounter, toOrder, clearCart, removeItem } = useOrderContext();
+  const { toOrder, clearCart, removeItem } = useOrderContext();
 
   const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
 
   const chequeProduct = (laId) => {
-    return productosGuardados.find(
-      (producto) => producto.id === laId
-    );
+    return productosGuardados.find( (producto) => producto.id === laId );
   }
 
-
+  const meteClases = (laId,accion) => {
+     accion && document.getElementById(laId).querySelector('img').classList.add('border-2', 'border-rosado-50')
+     !accion && document.getElementById(laId).querySelector('img').classList.remove('border-2', 'border-rosado-50')
+  }
 
   const addOrder = (laId, pasado=false ) => {
     setCantidad(cantidad + 1)
-    setCounter(counter + 1)
     setOrder(true)
     toOrder(laId, name, cantidad + 1, price, image)
-    !pasado && document.getElementById(laId).querySelector('img').classList.add('border-2', 'border-rosado-50')
+    !pasado && meteClases(laId, true)
   }
   const removeOrder = (laId) => {
     setCantidad(cantidad - 1)
-    setCounter(counter - 1)
-    console.log(cantidad)
     toOrder(laId, name, cantidad - 1, price, image)
     if (cantidad <= 1) {
       removeItem(laId)
-      document.getElementById(laId).querySelector('img').classList.remove('border-2', 'border-rosado-50')
+      meteClases(laId, false)
     }
   }
 
-  useEffect(() => {
+  useEffect(() => { //Para la recarga de la pagina
     if(chequeProduct(id)){
       setCantidad(chequeProduct(id).cantidad) //chequeProduct(id).cantidad 
       setOrder(true)
+      meteClases(id, true)
     }else{
       setCantidad(0)
       setOrder(false)
+      meteClases(id, false)
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [removeItem]);
 
