@@ -1,11 +1,15 @@
 import Card from "./Card";
 import Ordered from "./Ordered";
 import ModalOrder from "./ModalOrder";
+import TablesSelect from "./TablesSelect";
+
 import { useOrderContext } from "../context/OrderContext";
 import { useProduct } from "../context/ProductoContext";
-import TablesSelect from "./TablesSelect";
+import { useTablesContext } from "../context/TablesContext";
+
 function CardsContainer() {
-    const { counter, tableActual } = useOrderContext();
+    const { counter} = useOrderContext();
+    const {tableActual} = useTablesContext();
     const { data } = useProduct();
 
     return (

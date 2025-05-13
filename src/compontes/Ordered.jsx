@@ -1,11 +1,10 @@
 import { useOrderContext } from "../context/OrderContext";
 
 function Ordered() {
-
     const data = JSON.parse(localStorage.getItem('cartOrdered'));
     const hayData = data && data.length > 0;
     const totalPay = hayData &&data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
-
+    
     const {removeItem, setOpenModal} = useOrderContext();
 
     return (

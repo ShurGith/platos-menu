@@ -1,24 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import  { createContext, useContext, useEffect, useState } from "react";
+import { useTablesContext } from "./TablesContext";
 const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
     const [counter, setCounter] = useState(0);
-    const [tablesSelect, setTablesSelect] = useState([]);
     const [openModal, setOpenModal] = useState(false);
-    const [table, setTable] = useState(null);
-    const [tableActual, setTableActual] = useState(null);
     const [orderCart, setOrderCart] = useState(() => {
         const primerosDatos = localStorage.getItem('cartOrdered');
         return primerosDatos ? JSON.parse(primerosDatos) : [];
-  
     });
     const [actualOrder, setActualOrder] = useState([]);
-
-    //const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
-
-    /** Mesas */
-
+    const { tables } = useTablesContext();
+/*
+ function toOrder(table, id, name, quantity, price, image) {
+        const total = quantity * price;
+        const newItem = { id, name, quantity, price, total, image };
+        setOrderCart((prev) => {
+            const existingItem = prev.find((item) => item.id === id);
+            if (existingItem) {
+                return prev.map((item) => {
+                    if (item.id === id) {
+                        return { ...item, quantity: item.quantity + quantity, total: item.total + total };
+                    }
+                    return item;
+                });
+            } else {
+                return [...prev, newItem];
+            }
+        });
+    }
+        */
 
     function removeItem(id) {
         setOrderCart((prev) => prev.filter((item) => item.id !== id));
@@ -58,11 +70,11 @@ export const OrderProvider = ({ children }) => {
         <OrderContext.Provider value={{ 
             orderCart, setOrderCart,
             counter, setCounter,
-            tableActual, setTableActual,
+          //  tableActual, setTableActual,
             toOrder, actualOrder, //arrayTable,
-            removeItem, table, setTable,
+            removeItem, //table, setTable,
             openModal, setOpenModal,
-            tablesSelect, setTablesSelect,
+            //tablesSelect, setTablesSelect,
              }}>
             {children}
         </OrderContext.Provider>

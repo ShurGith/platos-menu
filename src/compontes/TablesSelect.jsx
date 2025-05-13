@@ -1,22 +1,14 @@
 import { useState } from 'react'
 import { useOrderContext } from '../context/OrderContext';
+import { useTablesContext } from '../context/TablesContext';
 
 function TablesSelect() {
-    const { tablesSelect, setTablesSelect, arrayTable, setTableActual,tableActual } = useOrderContext();
+    const { tablesSelect, setTablesSelect, arrayTable, setTableActual,tableActual } = useTablesContext();
+    const {tables} = useTablesContext();
     const [selectedTable, setSelectedTable] = useState(null);
     const [selcionable, setSelcionable] = useState(true);
     const orderAction = document.getElementById('order-action')
-    const tables = [
-        { id: 1, name: 'Table 1' },
-        { id: 2, name: 'Table 2' },
-        { id: 3, name: 'Table 3' },
-        { id: 4, name: 'Table 4' },
-        { id: 5, name: 'Table 5' },
-        { id: 6, name: 'Table 6' },
-        { id: 7, name: 'Table 7' },
-        { id: 8, name: 'Table 8' },
-        { id: 9, name: 'Table 9' },
-    ]
+
 
     function handldleClick(elemento, table) {
         if(!selcionable){
