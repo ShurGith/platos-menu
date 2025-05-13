@@ -11,6 +11,9 @@ function TablesSelect() {
     const orderAction = document.getElementById('order-action')
 
 
+
+
+
     function handleTable(clickado, table) {
         if(!seleccionable ) {
             return
@@ -19,8 +22,7 @@ function TablesSelect() {
             elemento.querySelector('img').classList.add('invisible')
             elemento.classList.remove('cursor-pointer')
             elemento.classList.add('opacity-20', 'cursor-not-allowed')
-            /*orderAction.classList.toggle('hidden')
-            orderAction.classList.toggle('flex')*/
+            orderAction.classList.toggle('hidden')
             if (Number(clickado.id) === table.id ) {
                 clickado.classList.remove('bg-rosado-50', 'opacity-20')
                 clickado.classList.add('border-2', 'bg-rosado-90' , 'border-rosado-30', 'border-2')
@@ -35,28 +37,27 @@ function TablesSelect() {
       
     }
 
-    function cancelOrder() {
+
+    function makeOrder() { //Resetea los botones
         document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
             elemento.querySelector('img').classList.add('invisible')
             elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
             elemento.classList.add('cursor-pointer', "bg-rosado-50")
-          /*  orderAction.classList.toggle('hidden')
-            orderAction.classList.toggle('flex')*/
+            orderAction.classList.toggle('hidden')
         });
         setActualOrder([]);
         setSeleccionable(true)
+        setSelectedTable(null);
+        setTableActual(null);
+    }
 
+    function cancelOrder() {
+        makeOrder() //Resetea los botones
         const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
         localStorage.setItem('cartOrdered', JSON.stringify(datosFiltrados));
-
-        //setOrderCart(datosFiltrados);
-        
-
     }
+ 
 
-    function makeOrder() {
-        console.log(actualOrder)
-    }
 
     return (
         <div>
@@ -77,7 +78,7 @@ function TablesSelect() {
                     ))}
                 </div>
             </div>
-            <div id="order-action" className=" flex-col items-center gap-2 mt-6n">
+            <div id="order-action" className=" flex-col items-center gap-2 mt-6 hidden">
             <h2 className="text-2xl font-bold">Make Action</h2>
             <div className="flex justify-center gap-2 w-full">
                 <button 
