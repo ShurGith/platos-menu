@@ -39,7 +39,7 @@ function Ordered() {
                         </div>
                     <button 
                     onClick={() => setOpenModal(true)} 
-                    className="cursor-pointer bg-rojo text-rosado-10 py-2 rounded-full">Confirm Order</button>
+                    className="cursor-pointer bg-rojo text-rosado-10 py-2 rounded-full">CheckOut Order</button>
                 </div>
             }
 

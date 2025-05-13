@@ -5,7 +5,7 @@ import { useOrderContext } from "../context/OrderContext";
 import { useProduct } from "../context/ProductoContext";
 import TablesSelect from "./TablesSelect";
 function CardsContainer() {
-    const { counter } = useOrderContext();
+    const { counter, tableActual } = useOrderContext();
     const { data } = useProduct();
 
     return (
@@ -24,15 +24,17 @@ function CardsContainer() {
                 </div>
                 <div className="lg:min-w-1/4 mt-8 h-fit gap-4 flex flex-col">
                     <div className="lg:min-w-1/4  bg-white h-fit rounded-xl py-4 ">
-                        <h2 className="text-xl text-center text-rojo font-siete mb-4 ">
-                            Your Cart <span className="font-siete"> ({counter})</span>
-                        </h2>
+                        {tableActual &&
+                         <h2 className="text-xl border-b border-rosado-10 ml-6 text-rojo font-siete mb14 "> 
+                         Table Number: {tableActual} 
+                         </h2>}
+                            <h3 className="ml-18 mt-2 mb-2 text-lg text-rojo text-cinco"> Order quantity <span className="font-siete"> ({counter})</span></h3>
                         <Ordered />
                     </div>
                     <div className="flex flex-col gap-4 lg:px-6 px-2 py-4">
                         <TablesSelect />
                     </div>
-                </div>
+                </div> 
             </div>
         </>
     )

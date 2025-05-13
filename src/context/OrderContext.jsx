@@ -7,33 +7,17 @@ export const OrderProvider = ({ children }) => {
     const [tablesSelect, setTablesSelect] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [table, setTable] = useState(null);
+    const [tableActual, setTableActual] = useState(null);
     const [orderCart, setOrderCart] = useState(() => {
         const primerosDatos = localStorage.getItem('cartOrdered');
         return primerosDatos ? JSON.parse(primerosDatos) : [];
   
     });
-    const [actual, setActual] = useState([]);
+    const [actualOrder, setActualOrder] = useState([]);
 
     //const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
 
     /** Mesas */
-
-    const arrayTable = (table) => {
-        setTablesSelect((prevTablesSelect) => {
-            if (prevTablesSelect.includes(table)) {
-                // Si el número está, lo quitamos
-                return prevTablesSelect.filter(n => n !== table);
-                
-            } else {
-                // Si no está, lo añadimos
-               return  [...prevTablesSelect, table];
-            }
-          });         
-
-        //  console.log(tablesSelect); 
-    };
-
-
 
 
     function removeItem(id) {
@@ -43,7 +27,7 @@ export const OrderProvider = ({ children }) => {
     
     useEffect(() => {
         localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
-        setActual(JSON.stringify(orderCart));
+        setActualOrder(JSON.stringify(orderCart));
     }, [orderCart]);
     
     
@@ -60,7 +44,7 @@ export const OrderProvider = ({ children }) => {
                     return item;
                 });
             } else {
-                return [...prev, {table:table, id:id, name:name, cantidad:quantity, price:price, total:total.toFixed(2), image:image }];
+                return [...prev, { table: table, id:id, name:name, cantidad:quantity, price:price, total:total.toFixed(2), image:image }];
             }
         });
     }
@@ -74,7 +58,8 @@ export const OrderProvider = ({ children }) => {
         <OrderContext.Provider value={{ 
             orderCart, setOrderCart,
             counter, setCounter,
-            toOrder, actual, arrayTable,
+            tableActual, setTableActual,
+            toOrder, actualOrder, //arrayTable,
             removeItem, table, setTable,
             openModal, setOpenModal,
             tablesSelect, setTablesSelect,

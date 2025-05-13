@@ -6,7 +6,7 @@ function Boton({ name, price, image, id }) {
 
   const [cantidad, setCantidad] = useState(0)
 
-  const { toOrder, removeItem, tablesSelect } = useOrderContext();
+  const { toOrder, removeItem, tableActual, tablesSelect } = useOrderContext();
 
   const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
 
@@ -24,7 +24,7 @@ function Boton({ name, price, image, id }) {
   const addOrder = (laId, pasado=false ) => {
     setCantidad(cantidad + 1)
     setOrder(true)
-    toOrder(laId, name, cantidad + 1, price, image)
+    toOrder(tableActual, laId, name, cantidad + 1, price, image)
     !pasado && meteClases(laId, true)
   }
 
