@@ -1,12 +1,8 @@
-import { useOrderContext } from '../context/OrderContext';
-import { useTablesContext } from '../context/TablesContext';
-
 import { useCalcsContext } from "../context/CalcsContext";
 
 function TablesSelect() {
-    const { table, tables, setTableActual, tableActual, seleccionable, setSeleccionable } = useCalcsContext();
+    const { tables, setTableActual, tableActual, seleccionable, setSeleccionable } = useCalcsContext();
     const { setActualOrder, setOrderCart, orderCart, actualOrder } = useCalcsContext();
-
 
     const orderAction = document.getElementById('order-action')
     function makeOrder() { //Resetea los botones 
@@ -16,16 +12,16 @@ function TablesSelect() {
             elemento.classList.add('cursor-pointer', "bg-rosado-50")
             orderAction.classList.toggle('hidden')
         });
-    
+
         setSeleccionable(true)
         setTableActual(null);
     }
 
     function cancelOrder() {//Resetea los botones y elimina el pedido de la mesa actual
-        setOrderCart((prev) => prev.filter((item) =>  item.table !== tableActual));
+        setOrderCart((prev) => prev.filter((item) => item.table !== tableActual));
 
         setActualOrder([]);
-        setSeleccionable(true) 
+        setSeleccionable(true)
         setTableActual(null);
         makeOrder() //Resetea los botones
     }
@@ -39,7 +35,7 @@ function TablesSelect() {
     }
 
     function handleTable(clickado, table) { //Activacion de la mesa
-        if (!seleccionable)  return 
+        if (!seleccionable) return
 
         document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
             elemento.querySelector('img').classList.add('invisible')

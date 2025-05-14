@@ -9,11 +9,11 @@ function Carta() {
     <>
       <TablesProvider>
         <OrderProvider>
-            <ProductProvider>
-          <CalcsProvider>
+          <ProductProvider>
+            <CalcsProvider>
               <CardsContainer />
-          </CalcsProvider>
-            </ProductProvider>
+            </CalcsProvider>
+          </ProductProvider>
         </OrderProvider>
       </TablesProvider>
     </>

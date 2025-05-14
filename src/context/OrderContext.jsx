@@ -35,19 +35,20 @@ export const OrderProvider = ({ children }) => {
                     return item;
                 });
             } else {
-                return [...prev, { table: table, id: id, 
-                            name: name, cantidad: quantity, 
-                            price: price, total: total.toFixed(2), 
-                            image: image }];
+                return [...prev, {
+                    table: table, id: id,
+                    name: name, cantidad: quantity,
+                    price: price, total: total.toFixed(2),
+                    image: image
+                }];
             }
         });
     }
 
     useEffect(() => {
         setCounter(
-            orderCart.reduce((acc, item) =>
-                item.table === tableActual ? acc + item.cantidad : acc, 0)
-          );
+            orderCart.reduce((acc, item) => item.table === tableActual ? acc + item.cantidad : acc, 0)
+        );
 
     }, [orderCart, tableActual]);
 

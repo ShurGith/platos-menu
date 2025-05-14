@@ -1,52 +1,29 @@
-import { useOrderContext } from "../context/OrderContext";
-import { useTablesContext } from "../context/TablesContext";
-
 import { useCalcsContext } from "../context/CalcsContext";
 
 function ModalOrder() {
-
-    //! COMUNES PARA CalcsContext  ***/
-    // const { tableActual, setTableActual, setSeleccionable, setSelectedTable } = useTablesContext();
-    //  const { orderCart, setCounter, setActualOrder, openModal, setOpenModal, setOrderCart } = useOrderContext();
-    //  const firstData = orderCart;
-    /* const data = orderCart && orderCart.filter((item) => item.table === tableActual);
-     const totalPay = data && data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
- 
-     function makeOrder() { //Resetea los botones 
-         const orderAction = document.getElementById('order-action')
-         document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
-             elemento.querySelector('img').classList.add('invisible')
-             elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
-             elemento.classList.add('cursor-pointer', "bg-rosado-50")
-             orderAction.classList.toggle('hidden')
-         });
-     }*/
-    //! COMUNES PARA CalcsContext  ***/
-
     const { orderCart, setCounter, setActualOrder, openModal, setOpenModal,
-        setOrderCart, tableActual, setTableActual, setSeleccionable, setSelectedTable,
+        setOrderCart, tableActual, setTableActual, setSeleccionable,
         data, makeOrder, totalPay } = useCalcsContext();
-
 
     const actionModal = () => {
         const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
         localStorage.setItem('cartOrdered', JSON.stringify(datosFiltrados));
-        setOrderCart(datosFiltrados);
+       setOrderCart(datosFiltrados);
         setActualOrder([]);
         setSeleccionable(true)
-        setSelectedTable(null);
         setTableActual(null);
         setOpenModal(false);
         makeOrder();
         setCounter(0);
     }
-
-
+    //${ openModal ? 'block z-1' : 'hidden -z-1'} 
     return (
-        <div className={`${openModal ? 'block' : 'hidden'} w-screen h-screen px-2  bg-black/60 fixed z-1 flex justify-center items-center`}>
+        <div className={`${openModal ? 'block z-1' : 'hidden -z-1'} w-screen h-screen px-2  bg-black/60 fixed flex justify-center items-center `}>
             <div className="lg:w-1/2 w-full bg-white h-fit mt-4 rounded-xl py-4 lg:px-12" >
                 <div className="flex flex-col lg:px-5 px-1 py-3 ">
-                    <img className="size-10 mb-6" src='/assets/images/icon-order-confirmed.svg' alt="" />
+                <div className="flex justify-between items-center w-full pb-6">
+                    <img className="size-10" src='/assets/images/icon-order-confirmed.svg' alt="" />
+                        </div>
                     <h2 className="text-5xl text-rosado-90 font-siete mb-2 ">
                         Order Confirmed
                     </h2>

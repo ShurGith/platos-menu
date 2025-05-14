@@ -1,24 +1,17 @@
 import { useEffect, useState } from 'react'
-import { useOrderContext } from '../context/OrderContext'; //useOrderContext  from '../context/OrderContext';
-import { useTablesContext } from '../context/TablesContext';
 
 import { useCalcsContext } from "../context/CalcsContext";
 
-
 function BottonsOrder({ name, price, image, id }) {
 
-  const [order, setOrder] = useState(false)
+  const [thisOrder , setThisOrder] = useState(false)
   const [cantidad, setCantidad] = useState(0)
-/*
-  const { toOrder, removeItem } = useOrderContext();
-  const { tableActual } = useTablesContext();
-*/
+
   const { tableActual, toOrder, removeItem } = useCalcsContext();
 
-
-  const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
-
+  
   const chequeProduct = () => {
+    const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
     if (productosGuardados)
       return productosGuardados.find((item) => (item.table === tableActual && item.id === id));
   }
@@ -30,7 +23,7 @@ function BottonsOrder({ name, price, image, id }) {
 
   const addOrder = (laId, pasado = false) => {
     setCantidad(cantidad + 1)
-    setOrder(true)
+    setThisOrder(true)
     if (tableActual && id)
       toOrder(tableActual, laId, name, cantidad + 1, price, image)
     !pasado && meteClases(laId, true)
@@ -48,21 +41,20 @@ function BottonsOrder({ name, price, image, id }) {
   useEffect(() => { //Para la recarga de la pagina
     if (chequeProduct(tableActual)) {
       setCantidad(chequeProduct(tableActual).cantidad) //chequeProduct(id).cantidad 
-      setOrder(true)
+      setThisOrder(true)
       meteClases(id, true)
     } else {
       setCantidad(0)
-      setOrder(false)
+      setThisOrder(false)
       meteClases(id, false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [removeItem]);
 
-
+  //? ****  ####   Card Bottons  #### *******/
   return (
     <div className="absolute -bottom-5 left-0 w-full flex justify-center">
       {tableActual &&
-        !order && <div
+        !thisOrder && <div
           className='bg-rosado-5 py-2 px-6 rounded-full flex items-center cursor-pointer
     border border-rosado-30 gap-4'
           onClick={() => addOrder(id)}>
@@ -70,8 +62,7 @@ function BottonsOrder({ name, price, image, id }) {
           <h6 className='text-rosado-90 text-sm'>Add to Cart</h6>
         </div>}
 
-
-      {order && <div
+      {thisOrder && <div
         className='bg-rojo py-2 px-6 rounded-full flex items-center
     border border-rosado-40 gap-4'>
         <img
