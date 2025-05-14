@@ -43,7 +43,7 @@ function CardsContainer() {
                         <h3 className="ml-18 mt-2 mb-2 text-rojo text-cinco">
                             Total quantity <span className="font-siete">
                                 ({counter})</span></h3>
-                                </>
+                        </>
                         }
                         <Ordered />
                     </div>
