@@ -5,7 +5,6 @@ export const TablesProvider = ({ children }) => {
     const [tablesSelect, setTablesSelect] = useState();
     const [table, setTable] = useState();
     const [tableActual, setTableActual] = useState();
-    const [seletedTable, setSelectedTable] = useState(null);
     const [seleccionable, setSeleccionable] = useState(true);
 
     const tables = [
@@ -20,15 +19,12 @@ export const TablesProvider = ({ children }) => {
         { id: 9, name: 'Table 9' },
     ]
 
-
-
     return (
         <TablesContext.Provider value={{
             tables,
             tablesSelect,setTablesSelect,
             table,setTable,
             tableActual, setTableActual,
-            seletedTable, setSelectedTable,
             seleccionable, setSeleccionable
 
         }}>

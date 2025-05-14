@@ -40,8 +40,12 @@ export const OrderProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        setCounter(orderCart.reduce((acc, item) => acc + item.cantidad, 0));
-    }, [orderCart]);
+        setCounter(
+            orderCart.reduce((acc, item) =>
+                item.table === tableActual ? acc + item.cantidad : acc, 0)
+          );
+
+    }, [orderCart, tableActual]);
 
 
     return (

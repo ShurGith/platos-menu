@@ -28,11 +28,23 @@ function CardsContainer() {
                 </div>
                 <div className="lg:min-w-1/4 mt-8 h-fit gap-4 flex flex-col">
                     <div className="lg:min-w-1/4  bg-white h-fit rounded-xl py-4 ">
-                        {tableActual &&
+                        <h2 className="text-xl border-b border-rosado-10 ml-6 text-rojo font-siete mb14">
+                            Order Summary
+                        </h2>
+                        {tableActual && counter > 0 &&
+                        <>
                             <h2 className="text-xl border-b border-rosado-10 ml-6 text-rojo font-siete mb14 ">
                                 Table Number: {tableActual}
-                            </h2>}
-                        <h3 className="ml-18 mt-2 mb-2 text-lg text-rojo text-cinco"> Order quantity <span className="font-siete"> ({counter})</span></h3>
+                            </h2>
+                        <h3 className="ml-18 mt-2 mb-2 text-lg text-rojo text-cinco">
+                            Order Summary</h3>
+
+
+                        <h3 className="ml-18 mt-2 mb-2 text-rojo text-cinco">
+                            Total quantity <span className="font-siete">
+                                ({counter})</span></h3>
+                                </>
+                        }
                         <Ordered />
                     </div>
                     <div className="flex flex-col gap-4 lg:px-6 px-2 py-4">

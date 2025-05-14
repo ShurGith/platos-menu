@@ -2,8 +2,7 @@ import { useOrderContext } from '../context/OrderContext';
 import { useTablesContext } from '../context/TablesContext';
 
 function TablesSelect() {
-    const { tables, setTableActual, tableActual, seletedTable,
-        setSelectedTable, seleccionable, setSeleccionable } = useTablesContext();
+    const { tables, setTableActual, tableActual, seleccionable, setSeleccionable } = useTablesContext();
     const { setActualOrder, setOrderCart, orderCart,actualOrder } = useOrderContext();
 
 
@@ -17,17 +16,11 @@ function TablesSelect() {
         });
     
         setSeleccionable(true)
-       // setSelectedTable(null);
         setTableActual(null);
     }
 
     function cancelOrder() {//Resetea los botones y elimina el pedido de la mesa actual
-       
-        //Elimina el pedido de la mesa actual
-        //const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
-       // localStorage.setItem('cartOrdered', JSON.stringify(datosFiltrados));
         setOrderCart((prev) => prev.filter((item) =>  item.table !== tableActual));
-       // setOrderCart(JSON.stringify(datosFiltrados));
 
         setActualOrder([]);
         setSeleccionable(true) 
@@ -59,7 +52,6 @@ function TablesSelect() {
             setSeleccionable(false)
             setTableActual(table.id);
             setActualOrder(orderCart.filter((item) => item.table === table.id)); //Carga el pedido de la mesa
-            //setSelectedTable(table.id);
         });
 
     }
