@@ -25,7 +25,7 @@ export const OrderProvider = ({ children }) => {
         localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
         const filterTable = orderCart.filter((item) => item.table === tableActual);
         setActualOrder(JSON.stringify(filterTable));
-    }, []);
+    }, [orderCart]);
 
 
     
