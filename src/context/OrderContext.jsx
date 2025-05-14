@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useState } from "react";
 import { useTablesContext } from "./TablesContext";
+
 const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
@@ -14,7 +15,7 @@ export const OrderProvider = ({ children }) => {
     const [actualOrder, setActualOrder] = useState([]);
 
     function removeItem(id) {
-        setOrderCart((prev) => prev.filter((item) => item.id !== id && item.table === tableActual));
+        setOrderCart((prev) => prev.filter((item) => !(item.id === id && item.table === tableActual)));
         document.getElementById(id).querySelector('img').classList.remove('border-2', 'border-rosado-50')
     }
 
@@ -34,7 +35,10 @@ export const OrderProvider = ({ children }) => {
                     return item;
                 });
             } else {
-                return [...prev, { table: table, id: id, name: name, cantidad: quantity, price: price, total: total.toFixed(2), image: image }];
+                return [...prev, { table: table, id: id, 
+                            name: name, cantidad: quantity, 
+                            price: price, total: total.toFixed(2), 
+                            image: image }];
             }
         });
     }
@@ -65,7 +69,7 @@ export const OrderProvider = ({ children }) => {
 export const useOrderContext = () => {
     const context = useContext(OrderContext);
     if (!context) {
-        throw new Error("useMyContext debe usarse dentro de un MyProvider");
+        throw new Error("useOrderContext debe usarse dentro de un OrderProvider");
     }
     return context;
 };

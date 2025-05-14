@@ -1,17 +1,22 @@
-import { useOrderContext } from "../context/OrderContext";
-import { useTablesContext } from "../context/TablesContext";
+import { useCalcsContext } from "../context/CalcsContext";
 
 function Ordered() {
+
+    const { data,hayData, totalPay, removeItem, setOpenModal } = useCalcsContext();
+
     //! COMUNES PARA CalcsContext  ***/
-    const { tableActual } = useTablesContext();
-    const firstData = JSON.parse(localStorage.getItem('cartOrdered'))
-    const data = firstData && firstData.filter((item) => item.table === tableActual);
+/*     const { tableActual } = useTablesContext();
+    const { orderCart } = useOrderContext();
+   // const firstData = JSON.parse(localStorage.getItem('cartOrdered'))
+    const data = orderCart && orderCart.filter((item) => item.table === tableActual);
     const hayData = data && data.length > 0;
     const totalItems = hayData && data.reduce((acc, item) => acc + item.cantidad, 0);
     const totalPay = hayData &&data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
-    
+     
     const {removeItem, setOpenModal} = useOrderContext();
+    */
     //! COMUNES PARA CalcsContext  ***/
+    
     return (
         <div className="flex flex-col gap-4 w-full text-main lg:px-6">
             {hayData &&

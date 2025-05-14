@@ -1,9 +1,11 @@
 import { useOrderContext } from '../context/OrderContext';
 import { useTablesContext } from '../context/TablesContext';
 
+import { useCalcsContext } from "../context/CalcsContext";
+
 function TablesSelect() {
-    const { tables, setTableActual, tableActual, seleccionable, setSeleccionable } = useTablesContext();
-    const { setActualOrder, setOrderCart, orderCart,actualOrder } = useOrderContext();
+    const { table, tables, setTableActual, tableActual, seleccionable, setSeleccionable } = useCalcsContext();
+    const { setActualOrder, setOrderCart, orderCart, actualOrder } = useCalcsContext();
 
 
     const orderAction = document.getElementById('order-action')
@@ -29,6 +31,7 @@ function TablesSelect() {
     }
 
     function consolea() {
+        //console.clear()
         console.log("seleccionable:", seleccionable)
         console.log("tableActual: ", tableActual)
         console.log("orderCart: ", orderCart)
@@ -36,9 +39,8 @@ function TablesSelect() {
     }
 
     function handleTable(clickado, table) { //Activacion de la mesa
-        if (!seleccionable) {
-            return
-        }
+        if (!seleccionable)  return 
+
         document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
             elemento.querySelector('img').classList.add('invisible')
             elemento.classList.remove('cursor-pointer')
@@ -53,15 +55,12 @@ function TablesSelect() {
             setTableActual(table.id);
             setActualOrder(orderCart.filter((item) => item.table === table.id)); //Carga el pedido de la mesa
         });
-
     }
-
-
 
     return (
         <div>
             <div className="flex flex-col items-center">
-                <h2 className="text-2xl font-bold mb-4 cursor-pointer"
+                <h2 className="text-2xl font-bold mb-4"
                     onClick={() => consolea()}>
                     Select a Table</h2>
                 <div className=" grid grid-cols-3 gap-2 w-full">

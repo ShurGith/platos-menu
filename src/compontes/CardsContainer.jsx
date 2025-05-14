@@ -4,12 +4,14 @@ import ModalOrder from "./ModalOrder";
 import TablesSelect from "./TablesSelect";
 
 import { useOrderContext } from "../context/OrderContext";
-import { useProduct } from "../context/ProductoContext";
 import { useTablesContext } from "../context/TablesContext";
+import { useProduct } from "../context/ProductoContext";
+import { useCalcsContext } from "../context/CalcsContext";
 
 function CardsContainer() {
-    const { counter } = useOrderContext();
-    const { tableActual } = useTablesContext();
+    //const { counter } = useOrderContext();
+    //const { tableActual } = useTablesContext(); 
+    const {counter, tableActual } = useCalcsContext();
     const { data } = useProduct();
 
     return (
@@ -17,7 +19,7 @@ function CardsContainer() {
             <ModalOrder />
             <div className="w-full flex flex-col lg:flex-row gap-4 px-2 lg:px-18 py-6 relative overflow-hidden">
                 <div className="">
-                    <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
+                    <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts {counter}</h1>
                     <div className="lg:grid lg:grid-cols-3 lg:gap-4 w-full">
                         {data && data.map((item, index) => (
                             <Card numberId={index}
@@ -31,7 +33,7 @@ function CardsContainer() {
                         <h2 className="text-xl border-b border-rosado-10 ml-6 text-rojo font-siete mb14">
                             Order Summary
                         </h2>
-                        {tableActual && counter > 0 &&
+                        {tableActual  &&
                         <>
                             <h2 className="text-xl border-b border-rosado-10 ml-6 text-rojo font-siete mb14 ">
                                 Table Number: {tableActual}

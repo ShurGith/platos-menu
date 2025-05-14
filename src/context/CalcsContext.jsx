@@ -6,14 +6,14 @@ const CalcsContext = createContext();
 
 
 export const CalcsProvider = ({ children }) => {
-    const { tableActual, setTableActual, setSeleccionable, setSelectedTable } = useTablesContext();
-    const { orderCart, setCounter, setActualOrder, openModal, setOpenModal, setOrderCart } = useOrderContext();
-     const { tables } = useTablesContext();
+    const { table, tables, tableActual, setTableActual, setSeleccionable, seleccionable } = useTablesContext();
+    const { orderCart, counter, setCounter, setActualOrder, openModal, setOpenModal, setOrderCart, removeItem, toOrder } = useOrderContext();
 
     const data = orderCart && orderCart.filter((item) => item.table === tableActual);
-    const totalPay = data && data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
+    const hayData = data && data.length > 0;
+    const totalItems = hayData && data.reduce((acc, item) => acc + item.cantidad, 0);
+    const totalPay = hayData && data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
 
-    const { removeItem, setOpenModal } = useOrderContext();
 
     function makeOrder() { //Resetea los botones 
         const orderAction = document.getElementById('order-action')
@@ -27,7 +27,10 @@ export const CalcsProvider = ({ children }) => {
 
     return (
         <CalcsContext.Provider value={{
-           
+            table, tables, tableActual, setTableActual, setSeleccionable, seleccionable,
+            hayData, data, removeItem, totalItems, totalPay, toOrder, counter,
+            orderCart, setCounter, setActualOrder, openModal, setOrderCart,
+            setOpenModal, makeOrder
         }}>
             {children}
         </CalcsContext.Provider>

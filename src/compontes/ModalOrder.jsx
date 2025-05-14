@@ -1,26 +1,33 @@
 import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
 
+import { useCalcsContext } from "../context/CalcsContext";
+
 function ModalOrder() {
 
     //! COMUNES PARA CalcsContext  ***/
-    const { tableActual, setTableActual, setSeleccionable, setSelectedTable } = useTablesContext();
-    const { orderCart, setCounter, setActualOrder, openModal, setOpenModal, setOrderCart } = useOrderContext();
-  //  const firstData = orderCart;
-    const data = orderCart && orderCart.filter((item) => item.table === tableActual);
-    const totalPay = data && data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
-
-    function makeOrder() { //Resetea los botones 
-        const orderAction = document.getElementById('order-action')
-        document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
-            elemento.querySelector('img').classList.add('invisible')
-            elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
-            elemento.classList.add('cursor-pointer', "bg-rosado-50")
-            orderAction.classList.toggle('hidden')
-        });
-    }
+    // const { tableActual, setTableActual, setSeleccionable, setSelectedTable } = useTablesContext();
+    //  const { orderCart, setCounter, setActualOrder, openModal, setOpenModal, setOrderCart } = useOrderContext();
+    //  const firstData = orderCart;
+    /* const data = orderCart && orderCart.filter((item) => item.table === tableActual);
+     const totalPay = data && data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
+ 
+     function makeOrder() { //Resetea los botones 
+         const orderAction = document.getElementById('order-action')
+         document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
+             elemento.querySelector('img').classList.add('invisible')
+             elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
+             elemento.classList.add('cursor-pointer', "bg-rosado-50")
+             orderAction.classList.toggle('hidden')
+         });
+     }*/
     //! COMUNES PARA CalcsContext  ***/
-    
+
+    const { orderCart, setCounter, setActualOrder, openModal, setOpenModal,
+        setOrderCart, tableActual, setTableActual, setSeleccionable, setSelectedTable,
+        data, makeOrder, totalPay } = useCalcsContext();
+
+
     const actionModal = () => {
         const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
         localStorage.setItem('cartOrdered', JSON.stringify(datosFiltrados));

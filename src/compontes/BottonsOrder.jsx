@@ -2,12 +2,19 @@ import { useEffect, useState } from 'react'
 import { useOrderContext } from '../context/OrderContext'; //useOrderContext  from '../context/OrderContext';
 import { useTablesContext } from '../context/TablesContext';
 
+import { useCalcsContext } from "../context/CalcsContext";
+
+
 function BottonsOrder({ name, price, image, id }) {
+
   const [order, setOrder] = useState(false)
   const [cantidad, setCantidad] = useState(0)
-
+/*
   const { toOrder, removeItem } = useOrderContext();
   const { tableActual } = useTablesContext();
+*/
+  const { tableActual, toOrder, removeItem } = useCalcsContext();
+
 
   const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
 
