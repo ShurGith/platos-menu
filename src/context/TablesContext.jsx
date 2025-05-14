@@ -1,10 +1,12 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 const TablesContext = createContext();
 
 export const TablesProvider = ({ children }) => {
-    const [tablesSelect, setTablesSelect] = useState([]);
-    const [table, setTable] = useState(null);
-    const [tableActual, setTableActual] = useState(null);
+    const [tablesSelect, setTablesSelect] = useState();
+    const [table, setTable] = useState();
+    const [tableActual, setTableActual] = useState();
+    const [seletedTable, setSelectedTable] = useState(null);
+    const [seleccionable, setSeleccionable] = useState(true);
 
     const tables = [
         { id: 1, name: 'Table 1' },
@@ -25,7 +27,9 @@ export const TablesProvider = ({ children }) => {
             tables,
             tablesSelect,setTablesSelect,
             table,setTable,
-            tableActual, setTableActual
+            tableActual, setTableActual,
+            seletedTable, setSelectedTable,
+            seleccionable, setSeleccionable
 
         }}>
             {children}

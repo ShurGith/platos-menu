@@ -25,6 +25,7 @@ function BottonsOrder({ name, price, image, id }) {
   const addOrder = (laId, pasado=false ) => {
     setCantidad(cantidad + 1)
     setOrder(true)
+    if(tableActual && id)
     toOrder(tableActual, laId, name, cantidad + 1, price, image)
     !pasado && meteClases(laId, true)    
   }

@@ -25,7 +25,7 @@ export const OrderProvider = ({ children }) => {
         localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
         const filterTable = orderCart.filter((item) => item.table === tableActual);
         setActualOrder(JSON.stringify(filterTable));
-    }, [orderCart]);
+    }, []);
 
 
     
@@ -54,8 +54,9 @@ export const OrderProvider = ({ children }) => {
     return (
         <OrderContext.Provider value={{ 
             orderCart, setOrderCart,
-            counter,
-            toOrder, actualOrder, setActualOrder,
+            counter, setCounter,
+            toOrder, 
+            actualOrder, setActualOrder,
             removeItem, 
             openModal, setOpenModal,
              }}>

@@ -1,16 +1,35 @@
 import { useOrderContext } from "../context/OrderContext";
+import { useTablesContext } from "../context/TablesContext";
 
 function ModalOrder() {
-    const { openModal, setOpenModal, setOrderCart, orderCart, datosGuardados } = useOrderContext();
-    const data = JSON.parse(localStorage.getItem('cartOrdered'));
-    //const data = orderCart; 
-    //const hayData = data && data.length > 0;
+    const { tableActual, setTableActual, setSeleccionable, setSelectedTable } = useTablesContext();
+    const { orderCart, setCounter, setActualOrder, openModal, setOpenModal } = useOrderContext();
+    const firstData = orderCart;
+    const data = firstData && firstData.filter((item) => item.table === tableActual);
     const totalPay = data && data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
 
+    function makeOrder() { //Resetea los botones 
+        const orderAction = document.getElementById('order-action')
+        document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
+            elemento.querySelector('img').classList.add('invisible')
+            elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
+            elemento.classList.add('cursor-pointer', "bg-rosado-50")
+            orderAction.classList.toggle('hidden')
+        });
+    }
+
     const actionModal = () => {
-         setOrderCart([]);
+        const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
+        localStorage.setItem('cartOrdered', JSON.stringify(datosFiltrados));
+        setActualOrder([]);
+        setSeleccionable(true)
+        setSelectedTable(null);
+        setTableActual(null);
         setOpenModal(false);
-    }   
+        makeOrder();
+        setCounter(0);
+    }
+
 
     return (
         <div className={`${openModal ? 'block' : 'hidden'} w-screen h-screen px-2  bg-black/60 fixed z-1 flex justify-center items-center`}>
@@ -46,9 +65,9 @@ function ModalOrder() {
                             </div>
                         </div>
                     }
-                    <button 
-                    onClick={()=>actionModal() }
-                    className="cursor-pointer bg-rojo text-rosado-10 py-4 rounded-full">Start New Order</button>
+                    <button
+                        onClick={() => actionModal()}
+                        className="cursor-pointer bg-rojo text-rosado-10 py-4 rounded-full">Start New Order</button>
                 </div>
             </div>
         </div>
