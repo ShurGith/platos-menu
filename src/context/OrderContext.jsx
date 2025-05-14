@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import  { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useTablesContext } from "./TablesContext";
 const OrderContext = createContext();
 
@@ -18,21 +18,14 @@ export const OrderProvider = ({ children }) => {
         document.getElementById(id).querySelector('img').classList.remove('border-2', 'border-rosado-50')
     }
 
-    
-
     useEffect(() => {
-        // Guardar en localStorage cada vez que cambia
-           localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
-     /*    const filterTable = orderCart.filter((item) => item.table === tableActual);
-        setActualOrder(JSON.stringify(filterTable));*/
+        localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
     }, [orderCart]);
 
-
-    
     const toOrder = (table, id, name, quantity, price, image) => {
         const total = quantity * price;
-       setOrderCart((prev) => {
-           const existingItem = prev.some(item => item.id === id && item.table === table);
+        setOrderCart((prev) => {
+            const existingItem = prev.some(item => item.id === id && item.table === table);
             if (existingItem) {
                 return prev.map((item) => {
                     if (item.id === id && item.table === table) {
@@ -41,25 +34,25 @@ export const OrderProvider = ({ children }) => {
                     return item;
                 });
             } else {
-                return [...prev, { table:table, id:id, name:name, cantidad:quantity, price:price, total:total.toFixed(2), image:image }];
+                return [...prev, { table: table, id: id, name: name, cantidad: quantity, price: price, total: total.toFixed(2), image: image }];
             }
         });
     }
 
-    useEffect (() => {
-       setCounter(orderCart.reduce((acc, item) => acc + item.cantidad, 0));
-    }, [orderCart]);       
+    useEffect(() => {
+        setCounter(orderCart.reduce((acc, item) => acc + item.cantidad, 0));
+    }, [orderCart]);
 
-    
+
     return (
-        <OrderContext.Provider value={{ 
+        <OrderContext.Provider value={{
             orderCart, setOrderCart,
             counter, setCounter,
-            toOrder, 
+            toOrder,
             actualOrder, setActualOrder,
-            removeItem, 
+            removeItem,
             openModal, setOpenModal,
-             }}>
+        }}>
             {children}
         </OrderContext.Provider>
     );

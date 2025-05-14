@@ -2,10 +2,12 @@ import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
 
 function ModalOrder() {
+
+    //! COMUNES PARA CalcsContext  ***/
     const { tableActual, setTableActual, setSeleccionable, setSelectedTable } = useTablesContext();
-    const { orderCart, setCounter, setActualOrder, openModal, setOpenModal } = useOrderContext();
-    const firstData = orderCart;
-    const data = firstData && firstData.filter((item) => item.table === tableActual);
+    const { orderCart, setCounter, setActualOrder, openModal, setOpenModal, setOrderCart } = useOrderContext();
+  //  const firstData = orderCart;
+    const data = orderCart && orderCart.filter((item) => item.table === tableActual);
     const totalPay = data && data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
 
     function makeOrder() { //Resetea los botones 
@@ -17,10 +19,12 @@ function ModalOrder() {
             orderAction.classList.toggle('hidden')
         });
     }
-
+    //! COMUNES PARA CalcsContext  ***/
+    
     const actionModal = () => {
         const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
         localStorage.setItem('cartOrdered', JSON.stringify(datosFiltrados));
+        setOrderCart(datosFiltrados);
         setActualOrder([]);
         setSeleccionable(true)
         setSelectedTable(null);

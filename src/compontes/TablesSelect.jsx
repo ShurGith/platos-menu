@@ -30,8 +30,7 @@ function TablesSelect() {
        // setOrderCart(JSON.stringify(datosFiltrados));
 
         setActualOrder([]);
-        setSeleccionable(true)
-        // setSelectedTable(null);
+        setSeleccionable(true) 
         setTableActual(null);
         makeOrder() //Resetea los botones
     }

@@ -2,6 +2,7 @@ import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
 
 function Ordered() {
+    //! COMUNES PARA CalcsContext  ***/
     const { tableActual } = useTablesContext();
     const firstData = JSON.parse(localStorage.getItem('cartOrdered'))
     const data = firstData && firstData.filter((item) => item.table === tableActual);
@@ -10,7 +11,7 @@ function Ordered() {
     const totalPay = hayData &&data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
     
     const {removeItem, setOpenModal} = useOrderContext();
-
+    //! COMUNES PARA CalcsContext  ***/
     return (
         <div className="flex flex-col gap-4 w-full text-main lg:px-6">
             {hayData &&
