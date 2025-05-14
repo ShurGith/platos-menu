@@ -21,7 +21,7 @@ function BottonsOrder({ name, price, image, id }) {
     !accion && document.getElementById(laId).querySelector('img').classList.remove('border-2', 'border-rosado-50')
   }
 
-  const addOrder = (laId, pasado = false) => {
+  const addOrderItem = (laId, pasado = false) => {
     setCantidad(cantidad + 1)
     setThisOrder(true)
     if (tableActual && id)
@@ -29,9 +29,9 @@ function BottonsOrder({ name, price, image, id }) {
     !pasado && meteClases(laId, true)
   }
 
-  const removeOrder = (laId) => {
+  const removeOrderItem = (laId) => {
     setCantidad(cantidad - 1)
-    toOrder(tableActual, laId, name, cantidad - 1, price, image)
+    toOrder(tableActual, laId, name, cantidad - 1, price, image) //
     if (cantidad <= 1) {
       removeItem(laId)
       meteClases(laId, false)
@@ -57,7 +57,7 @@ function BottonsOrder({ name, price, image, id }) {
         !thisOrder && <div
           className='bg-rosado-5 py-2 px-6 rounded-full flex items-center cursor-pointer
     border border-rosado-30 gap-4'
-          onClick={() => addOrder(id)}>
+          onClick={() => addOrderItem(id)}>
           <img src="/assets/images/icon-add-to-cart.svg" alt="" />
           <h6 className='text-rosado-90 text-sm'>Add to Cart</h6>
         </div>}
@@ -68,13 +68,13 @@ function BottonsOrder({ name, price, image, id }) {
         <img
           className='size-4 border border-rosado-5 rounded-full p-1 cursor-pointer'
           src="/assets/images/icon-decrement-quantity.svg" alt=""
-          onClick={() => removeOrder(id)} //Restar una unidad
+          onClick={() => removeOrderItem(id)} //Restar una unidad
         />
         <h6 className='text-sm text-rosado-5'>{cantidad}</h6>
         <img
           className='size-4 border border-rosado-5 rounded-full p-1 cursor-pointer'
           src="/assets/images/icon-increment-quantity.svg" alt=""
-          onClick={() => addOrder(id, true)} //Sumar una unidad
+          onClick={() => addOrderItem(id, true)} //Sumar una unidad
         />
       </div>}
     </div>
