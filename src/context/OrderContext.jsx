@@ -22,9 +22,9 @@ export const OrderProvider = ({ children }) => {
 
     useEffect(() => {
         // Guardar en localStorage cada vez que cambia
-        localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
-        const filterTable = orderCart.filter((item) => item.table === tableActual);
-        setActualOrder(JSON.stringify(filterTable));
+           localStorage.setItem('cartOrdered', JSON.stringify(orderCart));
+     /*    const filterTable = orderCart.filter((item) => item.table === tableActual);
+        setActualOrder(JSON.stringify(filterTable));*/
     }, [orderCart]);
 
 

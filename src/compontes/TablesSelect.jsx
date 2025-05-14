@@ -4,7 +4,7 @@ import { useTablesContext } from '../context/TablesContext';
 function TablesSelect() {
     const { tables, setTableActual, tableActual, seletedTable,
         setSelectedTable, seleccionable, setSeleccionable } = useTablesContext();
-    const { setActualOrder, orderCart } = useOrderContext();
+    const { setActualOrder, setOrderCart, orderCart,actualOrder } = useOrderContext();
 
 
     const orderAction = document.getElementById('order-action')
@@ -15,7 +15,7 @@ function TablesSelect() {
             elemento.classList.add('cursor-pointer', "bg-rosado-50")
             orderAction.classList.toggle('hidden')
         });
-        setActualOrder([]);
+    
         setSeleccionable(true)
        // setSelectedTable(null);
         setTableActual(null);
@@ -24,14 +24,25 @@ function TablesSelect() {
     function cancelOrder() {//Resetea los botones y elimina el pedido de la mesa actual
        
         //Elimina el pedido de la mesa actual
-        const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
-        localStorage.setItem('cartOrdered', JSON.stringify(datosFiltrados));
+        //const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
+       // localStorage.setItem('cartOrdered', JSON.stringify(datosFiltrados));
+        setOrderCart((prev) => prev.filter((item) =>  item.table !== tableActual));
+       // setOrderCart(JSON.stringify(datosFiltrados));
+
         setActualOrder([]);
         setSeleccionable(true)
         // setSelectedTable(null);
         setTableActual(null);
-         makeOrder() //Resetea los botones
+        makeOrder() //Resetea los botones
     }
+
+    function consolea() {
+        console.log("seleccionable:", seleccionable)
+        console.log("tableActual: ", tableActual)
+        console.log("orderCart: ", orderCart)
+        console.log("actualOrder: ", actualOrder)
+    }
+
     function handleTable(clickado, table) { //Activacion de la mesa
         if (!seleccionable) {
             return
@@ -51,6 +62,7 @@ function TablesSelect() {
             setActualOrder(orderCart.filter((item) => item.table === table.id)); //Carga el pedido de la mesa
             //setSelectedTable(table.id);
         });
+
     }
 
 
@@ -58,7 +70,9 @@ function TablesSelect() {
     return (
         <div>
             <div className="flex flex-col items-center">
-                <h2 className="text-2xl font-bold mb-4">Select a Table</h2>
+                <h2 className="text-2xl font-bold mb-4 cursor-pointer"
+                    onClick={() => consolea()}>
+                    Select a Table</h2>
                 <div className=" grid grid-cols-3 gap-2 w-full">
                     {tables.map((table) => (
                         <button
