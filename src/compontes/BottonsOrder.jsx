@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
 import { useOrderContext } from '../context/OrderContext';
+import { useTablesContext } from '../context/TablesContext';
 
 function BottonsOrder({ name, price, image, id, quantity }) {
   const { actualOrder, setActualOrder } = useOrderContext();
 
-  const [intoNow, setIntoNow] = useState(false)
+  const { intoNow, setIntoNow, tableActual } = useTablesContext();
   const [cantidad, setCantidad] = useState(0)
 
   const meteClases = (laId, accion) => {
@@ -64,35 +65,37 @@ function BottonsOrder({ name, price, image, id, quantity }) {
       setCantidad(quantity)
       meteClases(id, true)
       setIntoNow(true)
+      console.log("tableActual: ", tableActual, "quantity", quantity);
     }
     else {
       setIntoNow(false)
       meteClases(id, false)
+      console.log("tableActual: ", tableActual, "quantity", quantity);
     }
-  }, [quantity, cantidad]);
+  }, [ quantity, tableActual]);
 
   //? ****  ####   Card Bottons  #### *******/
   return (
     <div className="absolute -bottom-5 left-0 w-full flex justify-center">
-      {!intoNow && <div
+      {tableActual &&  !intoNow && <div
         className='bg-rosado-5 py-2 px-6 rounded-full flex items-center cursor-pointer
     border border-rosado-30 gap-4'
         onClick={() => addOrderItem(id)}>
         <img src="/assets/images/icon-add-to-cart.svg" alt="" />
-        <h6 className='text-rosado-90 text-sm'>Add to Cart {quantity} {cantidad}</h6>
+        <h6 className='text-rosado-90 text-sm'>Add to Cart</h6>
       </div>}
 
-      {intoNow && <div
-        className='bg-rojo py-2 px-6 rounded-full flex items-center
-    border border-rosado-40 gap-4'>
+      {intoNow  && <div 
+        className='bg-rojo py-2 px-2 rounded-full flex items-center
+    border border-rosado-40 gap-12'>
         <img
-          className='size-4 border border-rosado-5 rounded-full p-1 cursor-pointer'
+          className='size-7 border border-rosado-5 rounded-full p-1 cursor-pointer'
           src="/assets/images/icon-decrement-quantity.svg" alt=""
           onClick={() => removeOrderItem(id)} //Restar una unidad
         />
-        <h6 className='text-sm text-rosado-5'>{cantidad}{quantity}</h6>
+        <h6 className='text-xl text-rosado-5'>{cantidad}</h6>
         <img
-          className='size-4 border border-rosado-5 rounded-full p-1 cursor-pointer'
+          className='size-7 border border-rosado-5 rounded-full p-1 cursor-pointer'
           src="/assets/images/icon-increment-quantity.svg" alt=""
           onClick={() => addOrderItem(id, true)} //Sumar una unidad
         />
