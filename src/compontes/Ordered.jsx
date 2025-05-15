@@ -2,13 +2,14 @@ import { useCalcsContext } from "../context/CalcsContext";
 
 function Ordered() {
 
-    const { data,hayData, totalPay, removeItem, setOpenModal } = useCalcsContext();
+    const { actualOrder, hayData, totalPay, removeItem, setOpenModal } = useCalcsContext();
+ 
 
     return (
         <div className="flex flex-col gap-4 w-full text-main lg:px-6">
             {hayData &&
                 <div className="flex flex-col gap-4 w-full px-6 lg:p-2">
-                    {data.map((item) => (
+                    {actualOrder.map((item) => (
                         <div key={item.name} className="flex w-full flex-col font-cuatro border-b text-sm border-rosado-10 py-2">
                                 <p className="font-siete">{item.name}</p>
                                 <div className="flex items-center justify-between text-rosado-40 ">

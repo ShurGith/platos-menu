@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { act, createContext, useContext } from "react";
 import { useTablesContext } from "./TablesContext";
 import { useOrderContext } from "./OrderContext";
 
@@ -7,13 +7,18 @@ const CalcsContext = createContext();
 
 export const CalcsProvider = ({ children }) => {
     const { table, tables, tableActual, setTableActual, setSeleccionable, seleccionable } = useTablesContext();
-    const { orderCart, counter, setCounter, setActualOrder, openModal, setOpenModal, setOrderCart, removeItem, toOrder } = useOrderContext();
+    const { orderCart, counter, setCounter, setActualOrder, openModal, setOpenModal, setOrderCart, removeItem, toOrder,
+        getOrderByTable,  actualOrder,thisOrder, setThisOrder,
+        addOrUpdateOrder, 
+        deleteOrder 
+     } = useOrderContext();
 
-    const data = orderCart && orderCart.filter((item) => item.table === tableActual);
-    const hayData = data && data.length > 0;
-    const totalItems = hayData && data.reduce((acc, item) => acc + item.cantidad, 0);
-    const totalPay = hayData && data.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
-
+    const hayData = actualOrder && actualOrder.length > 0;
+   // console.log(hayData);
+   const totalItems=1
+   // const totalItems = actualOrder && actualOrder.reduce((acc, item) => acc + item.cantidad, 0);
+    const totalPay = hayData && actualOrder.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
+   
 
     function makeOrder() { //Resetea los botones 
         const orderAction = document.getElementById('order-action')
@@ -28,15 +33,16 @@ export const CalcsProvider = ({ children }) => {
     return (
         <CalcsContext.Provider value={{
             table, tables, tableActual, setTableActual, setSeleccionable, seleccionable,
-            hayData, data, removeItem, totalItems, totalPay, toOrder, counter,
+            hayData,  removeItem, totalItems, totalPay, toOrder, counter,
             orderCart, setCounter, setActualOrder, openModal, setOrderCart,
-            setOpenModal, makeOrder
+            setOpenModal, makeOrder, getOrderByTable, actualOrder, thisOrder, setThisOrder,
+            addOrUpdateOrder,
+            deleteOrder,
         }}>
             {children}
         </CalcsContext.Provider>
     );
 }
-
 
 export const useCalcsContext = () => {
     const context = useContext(CalcsContext);

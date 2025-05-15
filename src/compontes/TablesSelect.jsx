@@ -1,8 +1,10 @@
 import { useCalcsContext } from "../context/CalcsContext";
 
 function TablesSelect() {
-    const { tables, setTableActual, tableActual, seleccionable, setSeleccionable } = useCalcsContext();
-    const { setActualOrder, setOrderCart, orderCart, actualOrder } = useCalcsContext();
+    const { tables, setTableActual, tableActual, seleccionable, setSeleccionable,
+         setActualOrder, setOrderCart, orderCart, actualOrder,
+        addOrUpdateOrder } = useCalcsContext();
+    
 
     const orderAction = document.getElementById('order-action')
     function makeOrder() { //Resetea los botones 
@@ -12,13 +14,17 @@ function TablesSelect() {
             orderAction.classList.toggle('hidden')
         });
 
+        addOrUpdateOrder(tableActual, actualOrder)
+        console.log("orderCart: ", orderCart)
+        console.log("actualOrder: ", actualOrder)
         setSeleccionable(true)
-        setTableActual(null);
+       // setActualOrder([])
+        //setOrderCart([])
+        //setTableActual(null);        
     }
 
     function cancelOrder() {//Resetea los botones y elimina el pedido de la mesa actual
-        setOrderCart((prev) => prev.filter((item) => item.table !== tableActual));
-
+       // setOrderCart((prev) => prev.filter((item) => item.table !== tableActual));
         setActualOrder([]);
         setSeleccionable(true)
         setTableActual(null);
@@ -46,7 +52,6 @@ function TablesSelect() {
             }
             setSeleccionable(false)
             setTableActual(table.id);
-            setActualOrder(orderCart.filter((item) => item.table === table.id)); //Carga el pedido de la mesa
         });
     }
 

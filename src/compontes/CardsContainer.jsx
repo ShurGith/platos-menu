@@ -11,7 +11,7 @@ function CardsContainer() {
     const { data } = useProduct();
 
     return <>
-        <ModalOrder />
+      {/*   <ModalOrder /> */}
 
         <div className="w-full  flex flex-col-reverse  lg:grid lg:grid-cols-6 gap-2 px-2 lg:px-18 py-6 relative overflow-hidden">
 

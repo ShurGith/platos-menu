@@ -1,46 +1,73 @@
-import { useEffect, useState } from 'react'
+import {  useEffect, useState } from 'react'
 
 import { useCalcsContext } from "../context/CalcsContext";
 
 function BottonsOrder({ name, price, image, id }) {
 
-  const [thisOrder , setThisOrder] = useState(false)
+ 
   const [cantidad, setCantidad] = useState(0)
 
-  const { tableActual, toOrder, removeItem } = useCalcsContext();
+  const { tableActual, removeItem, actualOrder, setActualOrder, thisOrder, setThisOrder } = useCalcsContext();
 
-  
-  const chequeProduct = () => {
-    const productosGuardados = JSON.parse(localStorage.getItem("cartOrdered"));
-    if (productosGuardados)
-      return productosGuardados.find((item) => (item.table === tableActual && item.id === id));
+  const chequeProduct = (id) => {
+   if(actualOrder.some(item => item.id === id))
+      return actualOrder.find(item => item.id === id).cantidad;
   }
+
+
+  useEffect(() => {
+    setThisOrder(chequeProduct(id))
+  }, [id])
 
   const meteClases = (laId, accion) => {
     accion && document.getElementById(laId).querySelector('img').classList.add('border-2', 'border-rosado-50')
     !accion && document.getElementById(laId).querySelector('img').classList.remove('border-2', 'border-rosado-50')
   }
 
+  const toOrder = (id, name, quantity, price, image) => {
+    const total = quantity * price;
+    setActualOrder((prev) => {
+   // const existingItem = prev.find(item => item.id === id );
+    const existingItem = chequeProduct(id);
+      if (existingItem) {
+        return prev.map((item) => {
+          if (item.id === id) {
+            return { ...item, cantidad: quantity, total: total.toFixed(2) };
+          }
+          return item;
+        });
+      } else {
+        return [...prev, {
+           id: id,
+          name: name, cantidad: quantity,
+          price: price, total: total.toFixed(2),
+          image: image
+        }];
+      }
+    });
+  }
+
   const addOrderItem = (laId, pasado = false) => {
     setCantidad(cantidad + 1)
     setThisOrder(true)
     if (tableActual && id)
-      toOrder(tableActual, laId, name, cantidad + 1, price, image)
+      toOrder( laId, name, cantidad + 1, price, image)
     !pasado && meteClases(laId, true)
   }
 
   const removeOrderItem = (laId) => {
     setCantidad(cantidad - 1)
-    toOrder(tableActual, laId, name, cantidad - 1, price, image) //
+    toOrder( laId, name, cantidad - 1, price, image) //
     if (cantidad <= 1) {
-      removeItem(laId)
+    //  removeItem(laId)
       meteClases(laId, false)
     }
   }
 
   useEffect(() => { //Para la recarga de la pagina
-    if (chequeProduct(tableActual)) {
-      setCantidad(chequeProduct(tableActual).cantidad) //chequeProduct(id).cantidad 
+    if (chequeProduct()) {
+   //   setCantidad(chequeProduct(tableActual).cantidad) //
+    chequeProduct(id).cantidad 
       setThisOrder(true)
       meteClases(id, true)
     } else {
