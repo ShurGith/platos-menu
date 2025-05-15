@@ -13,7 +13,7 @@ function CardsContainer() {
     return <>
         <ModalOrder />
 
-        <div className="w-full  flex flex-col flex-col-reverse  lg:grid lg:grid-cols-6 gap-2 px-2 lg:px-18 py-6 relative overflow-hidden">
+        <div className="w-full  flex flex-col-reverse  lg:grid lg:grid-cols-6 gap-2 px-2 lg:px-18 py-6 relative overflow-hidden">
 
             <div className="lg:col-span-4">
                 <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
