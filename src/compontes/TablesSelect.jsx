@@ -2,7 +2,7 @@ import { useCalcsContext } from "../context/CalcsContext";
 
 function TablesSelect() {
     const { tables, setTableActual, tableActual, seleccionable, setSeleccionable,
-         setActualOrder, setOrderCart, orderCart, actualOrder,
+         setActualOrder, orderCart, actualOrder,
         addOrUpdateOrder } = useCalcsContext();
     
 
@@ -15,12 +15,10 @@ function TablesSelect() {
         });
 
         addOrUpdateOrder(tableActual, actualOrder)
-        console.log("orderCart: ", orderCart)
         console.log("actualOrder: ", actualOrder)
         setSeleccionable(true)
-       // setActualOrder([])
-        //setOrderCart([])
-        //setTableActual(null);        
+        setActualOrder([])
+        setTableActual(null);        
     }
 
     function cancelOrder() {//Resetea los botones y elimina el pedido de la mesa actual

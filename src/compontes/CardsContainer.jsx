@@ -19,7 +19,7 @@ function CardsContainer() {
                 <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
                 <div className="lg:grid lg:grid-cols-3 w-full">
                     {data && data.map((item, index) => (
-                        <Card numberId={index+1} key={index} item={item} />
+                        <Card id={item.id} numberId={index+1} key={index} item={item} />
                     ))}
                 </div>
             </div>

@@ -1,19 +1,14 @@
-import {  useEffect, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react'
 
 import { useCalcsContext } from "../context/CalcsContext";
 
 function BottonsOrder({ name, price, image, id }) {
+  const { tableActual, removeItem, actualOrder, setActualOrder,
+    thisOrder, setThisOrder } = useCalcsContext();
 
- 
-  const [cantidad, setCantidad] = useState(0)
-
-  const { tableActual, removeItem, actualOrder, setActualOrder, thisOrder, setThisOrder } = useCalcsContext();
-
-  const chequeProduct = (id) => {
-   if(actualOrder.some(item => item.id === id))
-      return actualOrder.find(item => item.id === id).cantidad;
-  }
-
+  //const [cantidad, setCantidad] = useState(0)
+  let cantidad = 0
 
   useEffect(() => {
     setThisOrder(chequeProduct(id))
@@ -27,8 +22,8 @@ function BottonsOrder({ name, price, image, id }) {
   const toOrder = (id, name, quantity, price, image) => {
     const total = quantity * price;
     setActualOrder((prev) => {
-   // const existingItem = prev.find(item => item.id === id );
-    const existingItem = chequeProduct(id);
+      // const existingItem = prev.find(item => item.id === id );
+      const existingItem = chequeProduct(id);
       if (existingItem) {
         return prev.map((item) => {
           if (item.id === id) {
@@ -38,7 +33,7 @@ function BottonsOrder({ name, price, image, id }) {
         });
       } else {
         return [...prev, {
-           id: id,
+          id: id,
           name: name, cantidad: quantity,
           price: price, total: total.toFixed(2),
           image: image
@@ -47,32 +42,47 @@ function BottonsOrder({ name, price, image, id }) {
     });
   }
 
+
+  const chequeProduct = (id) => {
+    if (actualOrder.some(item => item.id === id))
+      cantidad = (actualOrder.find(item => item.id === id).cantidad)
+  }
+
+  const chekcThisButton = (id) => {
+    if (actualOrder.some(item => item.id === id))
+      return true
+    else return false
+  }
+
   const addOrderItem = (laId, pasado = false) => {
-    setCantidad(cantidad + 1)
-    setThisOrder(true)
-    if (tableActual && id)
-      toOrder( laId, name, cantidad + 1, price, image)
+    cantidad = (cantidad + 1)
+    chekcThisButton(laId)
+    //if (tableActual && id)
+    toOrder(laId, name, cantidad + 1, price, image)
     !pasado && meteClases(laId, true)
   }
 
   const removeOrderItem = (laId) => {
-    setCantidad(cantidad - 1)
-    toOrder( laId, name, cantidad - 1, price, image) //
+    cantidad =(cantidad - 1)
+    toOrder(laId, name, cantidad - 1, price, image) //
     if (cantidad <= 1) {
-    //  removeItem(laId)
+      //  removeItem(laId)
       meteClases(laId, false)
     }
   }
+  useEffect(() => {
+   
+  }, [addOrderItem, removeOrderItem]);
 
   useEffect(() => { //Para la recarga de la pagina
-    if (chequeProduct()) {
-   //   setCantidad(chequeProduct(tableActual).cantidad) //
-    chequeProduct(id).cantidad 
-      setThisOrder(true)
+    if (tableActual) {
+      //   setCantidad(chequeProduct(tableActual).cantidad) //
+      cantidad = (chequeProduct(id)) //chequeProduct(id).cantidad 
+      // setThisOrder(true)
       meteClases(id, true)
     } else {
-      setCantidad(0)
-      setThisOrder(false)
+    //  setCantidad(0)
+      // setThisOrder(false)
       meteClases(id, false)
     }
   }, [removeItem]);
@@ -80,16 +90,15 @@ function BottonsOrder({ name, price, image, id }) {
   //? ****  ####   Card Bottons  #### *******/
   return (
     <div className="absolute -bottom-5 left-0 w-full flex justify-center">
-      {tableActual &&
-        !thisOrder && <div
-          className='bg-rosado-5 py-2 px-6 rounded-full flex items-center cursor-pointer
+      {!chekcThisButton(id) && <div
+        className='bg-rosado-5 py-2 px-6 rounded-full flex items-center cursor-pointer
     border border-rosado-30 gap-4'
-          onClick={() => addOrderItem(id)}>
-          <img src="/assets/images/icon-add-to-cart.svg" alt="" />
-          <h6 className='text-rosado-90 text-sm'>Add to Cart</h6>
-        </div>}
+        onClick={() => addOrderItem(id)}>
+        <img src="/assets/images/icon-add-to-cart.svg" alt="" />
+        <h6 className='text-rosado-90 text-sm'>Add to Cart</h6>
+      </div>}
 
-      {thisOrder && <div
+      {chekcThisButton(id) && <div
         className='bg-rojo py-2 px-6 rounded-full flex items-center
     border border-rosado-40 gap-4'>
         <img
