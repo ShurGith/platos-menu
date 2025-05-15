@@ -1,12 +1,13 @@
-import { useCalcsContext } from "../context/CalcsContext";
+import { useOrderContext } from "../context/OrderContext";
+import { useTablesContext } from "../context/TablesContext";
 
 function TablesSelect() {
-    const { tables, setTableActual, tableActual, seleccionable, setSeleccionable,
-         setActualOrder, orderCart, actualOrder,
-        addOrUpdateOrder } = useCalcsContext();
+    const { tables, setTableActual, tableActual, seleccionable, setSeleccionable} = useTablesContext();
+    const{ setActualOrder, orderCart, actualOrder, addOrUpdateOrder } = useOrderContext();
     
 
     const orderAction = document.getElementById('order-action')
+
     function makeOrder() { //Resetea los botones 
         document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
             elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
@@ -15,14 +16,12 @@ function TablesSelect() {
         });
 
         addOrUpdateOrder(tableActual, actualOrder)
-        console.log("actualOrder: ", actualOrder)
         setSeleccionable(true)
         setActualOrder([])
         setTableActual(null);        
     }
 
     function cancelOrder() {//Resetea los botones y elimina el pedido de la mesa actual
-       // setOrderCart((prev) => prev.filter((item) => item.table !== tableActual));
         setActualOrder([]);
         setSeleccionable(true)
         setTableActual(null);
@@ -30,7 +29,7 @@ function TablesSelect() {
     }
 
     function consolea() {
-        //console.clear()
+        console.clear()
         console.log("seleccionable:", seleccionable)
         console.log("tableActual: ", tableActual)
         console.log("orderCart: ", orderCart)

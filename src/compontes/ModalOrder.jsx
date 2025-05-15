@@ -1,9 +1,22 @@
-import { useCalcsContext } from "../context/CalcsContext";
+import { useOrderContext } from "../context/OrderContext";
+import { useTablesContext } from "../context/TablesContext";
 
 function ModalOrder() {
-    const { orderCart, setCounter, setActualOrder, openModal, setOpenModal,
-        setOrderCart, tableActual, setTableActual, setSeleccionable,
-        data, makeOrder, totalPay } = useCalcsContext();
+    const { orderCart, setCounter, actualOrder, openModal, setOpenModal,
+        setOrderCart, totalPay } = useOrderContext();
+
+    const { tableActual, setTableActual, setSeleccionable, } = useTablesContext();
+
+
+
+    function makeOrder() { //Resetea los botones 
+        document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
+            elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
+            elemento.classList.add('cursor-pointer', "bg-rosado-50")
+            document.getElementById('order-action').classList.toggle('hidden')
+        });
+    }
+
 
     const actionModal = () => {
         const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
@@ -16,6 +29,8 @@ function ModalOrder() {
         makeOrder();
         setCounter(0);
     }
+
+
     //${ openModal ? 'block z-1' : 'hidden -z-1'} 
     return (
         <div className={`${openModal ? 'block z-1' : 'hidden -z-1'} w-screen h-screen px-2  bg-black/60 fixed flex justify-center items-center `}>
@@ -30,9 +45,9 @@ function ModalOrder() {
                     <p className="text-rosado-90/50">We hope you enjoy your food!</p>
                 </div>
                 <div className="flex flex-col px-1  lg:py-6 gap-4 w-full text-main">
-                    {data &&
+                    {actualOrder &&
                         <div className="flex flex-col bg-rosado-5 gap-2 w-full lg:p-6 py-2 rounded-xl ">
-                            {data.map((item) => (
+                            {actualOrder.map((item) => (
                                 <div key={item.name} className="flex w-full border-b border-rosado-10 pl-1 pb-2 ">
                                     <img src={item.image} className="size-18 rounded-md" alt="" />
                                     <div className="flex flex-col px-3 justify-center gap-y-1 w-full">

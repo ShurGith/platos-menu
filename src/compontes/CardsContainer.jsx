@@ -4,14 +4,16 @@ import ModalOrder from "./ModalOrder";
 import TablesSelect from "./TablesSelect";
 
 import { useProduct } from "../context/ProductoContext";
-import { useCalcsContext } from "../context/CalcsContext";
+import { useOrderContext } from "../context/OrderContext";
+import { useTablesContext } from "../context/TablesContext";
 
 function CardsContainer() {
-    const { counter, tableActual } = useCalcsContext();
+    const { counter } = useOrderContext();
+    const { tableActual } = useTablesContext();
     const { data } = useProduct();
 
     return <>
-      {/*   <ModalOrder /> */}
+        {/*   <ModalOrder /> */}
 
         <div className="w-full  flex flex-col-reverse  lg:grid lg:grid-cols-6 gap-2 px-2 lg:px-18 py-6 relative overflow-hidden">
 
@@ -19,7 +21,7 @@ function CardsContainer() {
                 <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
                 <div className="lg:grid lg:grid-cols-3 w-full">
                     {data && data.map((item, index) => (
-                        <Card id={item.id} numberId={index+1} key={index} item={item} />
+                        <Card id={item.id} numberId={index + 1} key={index} item={item} />
                     ))}
                 </div>
             </div>

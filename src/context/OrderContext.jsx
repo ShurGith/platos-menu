@@ -14,12 +14,16 @@ export const OrderProvider = ({ children }) => {
     });
     const { tableActual } = useTablesContext();
     const [actualOrder, setActualOrder] = useState([]);
-    const [thisOrder, setThisOrder] = useState(false)
+  //  const [thisOrder, setThisOrder] = useState(false)
    /* function removeItem(id) {
         setOrderCart((prev) => prev.filter((item) => !(item.id === id && item.table === tableActual)));
         document.getElementById(id).querySelector('img').classList.remove('border-2', 'border-rosado-50')
     }
  */
+
+    const hayData = actualOrder && actualOrder.length > 0;
+    const totalItems = 1
+    const totalPay = hayData && actualOrder.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
 
 
     // Guardar los pedidos actualizados en localStorage
@@ -68,14 +72,13 @@ export const OrderProvider = ({ children }) => {
         <OrderContext.Provider value={{
             orderCart, setOrderCart,
             counter, setCounter,
-          //  toOrder,
             actualOrder, setActualOrder,
         //    removeItem,
-            openModal, setOpenModal,
-          //  orderCart,
+            openModal, setOpenModal,hayData, totalItems, totalPay,
             getOrderByTable,
-            addOrUpdateOrder,
-            deleteOrder, thisOrder, setThisOrder,
+            addOrUpdateOrder, 
+            deleteOrder, 
+            //thisOrder, setThisOrder,
         }}>
             {children}
         </OrderContext.Provider>

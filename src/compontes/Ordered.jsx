@@ -1,9 +1,7 @@
-import { useCalcsContext } from "../context/CalcsContext";
+import { useOrderContext } from "../context/OrderContext";
 
 function Ordered() {
-
-    const { actualOrder, hayData, totalPay, removeItem, setOpenModal } = useCalcsContext();
- 
+    const { actualOrder, hayData, totalPay,setOpenModal } = useOrderContext();
 
     return (
         <div className="flex flex-col gap-4 w-full text-main lg:px-6">
