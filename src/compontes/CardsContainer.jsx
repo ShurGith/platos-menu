@@ -1,14 +1,15 @@
 import Card from "./Card";
 import Ordered from "./Ordered";
-import ModalOrder from "./ModalOrder";
+import ModalOrder from "./modals/ModalOrder";
 import TablesSelect from "./TablesSelect";
 
 import { useProduct } from "../context/ProductoContext";
 import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
+import ModalOrderConfirm from "./modals/ModalOrderConfirm";
 
 function CardsContainer() {
-    const { counter , totalPay, orderCart} = useOrderContext();
+    const { counter, orderCart, modalOption} = useOrderContext();
     const { tableActual } = useTablesContext();
     const { data } = useProduct();
     const pendingOrders = orderCart.length;
@@ -18,7 +19,9 @@ function CardsContainer() {
 
     return (
         <div className="w-full  flex flex-col-reverse  lg:grid lg:grid-cols-6 gap-2 px-2 lg:px-18 py-6 relative overflow-hidden">
-            {/*   <ModalOrder /> */}
+               <ModalOrder /> 
+             {/*   <ModalDeleteConfirm /> */}
+               <ModalOrderConfirm option={modalOption} />
             <div className="lg:col-span-4">
                 <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
                 <h3 className="text-base font-cinco text-rosado-90"> Pending {pendingOrders} Orders "CardsContainer"</h3>

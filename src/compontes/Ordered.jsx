@@ -19,8 +19,7 @@ function Ordered() {
                                         <p className="font-cinco">${item.total}</p>
                                     </div>
                                     <button className="size-4 rounded-full border flex items-center justify-center cursor-pointer"
-                                    onClick={() => removeThisItem(item.id)}
-                                    >
+                                    onClick={() => removeThisItem(item.id)}>
                                         <img src="/assets/images/icon-remove-item.svg" alt="" />
                                     </button>
                             </div>

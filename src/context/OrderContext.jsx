@@ -7,13 +7,15 @@ const OrderContext = createContext();
 export const OrderProvider = ({ children }) => {
     const [counter, setCounter] = useState(0);
     const [openModal, setOpenModal] = useState(false);
+    const [openOrderConfirm, setOpenOrderConfirm] = useState(true)
+    const [modalOption, setModalOption] = useState(null);
+    const [actualOrder, setActualOrder] = useState([]);
 
     const [orderCart, setOrderCart] = useState(() => {
         const datosGuardados = localStorage.getItem('cartOrdered');
         return datosGuardados ? JSON.parse(datosGuardados) : [];
     });
     const { tableActual } = useTablesContext();
-    const [actualOrder, setActualOrder] = useState([]);
 
     const hayData = actualOrder && actualOrder.length > 0;
     const totalItems = 1
@@ -53,9 +55,7 @@ export const OrderProvider = ({ children }) => {
                 return updated;
             }
             return [...prevOrders, { table: tableNumber, item }];
-        });
-        console.log("Pedido actualizado:", tableNumber, item);
-        
+        });        
     };
     
     //Eliminar un item desde la carta
@@ -75,9 +75,13 @@ export const OrderProvider = ({ children }) => {
             orderCart, setOrderCart,
             counter, setCounter,
             actualOrder, setActualOrder,
-            openModal, setOpenModal, hayData, totalItems, totalPay,
+            openModal, setOpenModal,
+            modalOption, setModalOption,
+            openOrderConfirm, setOpenOrderConfirm,
+            hayData, totalItems, totalPay,
             getOrderByTable, removeThisItem,
             addOrUpdateOrder, deleteOrder,
+            
         }}>
             {children}
         </OrderContext.Provider>

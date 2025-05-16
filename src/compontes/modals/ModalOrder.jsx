@@ -1,13 +1,11 @@
-import { useOrderContext } from "../context/OrderContext";
-import { useTablesContext } from "../context/TablesContext";
+import { useOrderContext } from "../../context/OrderContext";
+import { useTablesContext } from "../../context/TablesContext";
 
 function ModalOrder() {
-    const { orderCart, setCounter, actualOrder, openModal, setOpenModal,
-        setOrderCart, totalPay } = useOrderContext();
+    const { orderCart, setCounter, actualOrder, openModal, setOpenModal, setOpenOrderConfirm,setActualOrder,
+        setOrderCart, totalPay, setModalOption } = useOrderContext();
 
     const { tableActual, setTableActual, setSeleccionable, } = useTablesContext();
-
-
 
     function makeOrder() { //Resetea los botones 
         document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
@@ -21,13 +19,15 @@ function ModalOrder() {
     const actionModal = () => {
         const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
         localStorage.setItem('cartOrdered', JSON.stringify(datosFiltrados));
-       setOrderCart(datosFiltrados);
+        setOrderCart(datosFiltrados);
         setActualOrder([]);
         setSeleccionable(true)
         setTableActual(null);
         setOpenModal(false);
         makeOrder();
         setCounter(0);
+        setOpenOrderConfirm(true)
+        setModalOption('delete')
     }
 
 

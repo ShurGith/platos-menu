@@ -3,9 +3,7 @@ import { useTablesContext } from "../context/TablesContext";
 
 function TablesSelect() {
     const { tables, setTableActual, tableActual, seleccionable, setSeleccionable } = useTablesContext();
-    const { setActualOrder, orderCart, actualOrder, addOrUpdateOrder, deleteOrder } = useOrderContext();
-
-    const orderAction = document.getElementById('order-action')
+    const { setActualOrder, orderCart, actualOrder, addOrUpdateOrder, deleteOrder, setModalOption,setOpenOrderConfirm } = useOrderContext();
 
     function comumAction(desactivar = false) {
         document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
@@ -16,7 +14,6 @@ function TablesSelect() {
                 elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
                 elemento.classList.add('cursor-pointer', "bg-rosado-50")
             }
-            orderAction.classList.toggle('hidden')
         });
     }
 
@@ -26,7 +23,9 @@ function TablesSelect() {
         addOrUpdateOrder(tableActual, actualOrder)
         setSeleccionable(true)
         setActualOrder([])
-        setTableActual(null);
+        setTableActual(null)
+        setOpenOrderConfirm(true)
+        setModalOption('confirm')
     }
 
     function goBack() {
@@ -34,7 +33,6 @@ function TablesSelect() {
         setSeleccionable(true)
         setTableActual(null);
     }
-
 
     function cancelOrder() {//Resetea los botones y elimina el pedido de la mesa actual
         setActualOrder([]);
@@ -79,8 +77,16 @@ function TablesSelect() {
                     ))}
                 </div>
             </div>
-            <div id="order-action" className=" flex-col items-center gap-2 mt-6 hidden">
-                <h2 className="text-2xl font-bold">Make Action</h2>
+        
+            <div id="order-action" className=" flex-col items-center gap-2 mt-2">
+                {!seleccionable && 
+                <>
+                {actualOrder.length > 0 &&
+                <h2 className="text-2xl font-bold text-center">Make Action</h2>
+                }
+                {actualOrder.length <= 0 && <h2 className="text-2xl font-bold text-center">
+                    Add some item to your order or GoBack
+                </h2>}
                 <div className="flex justify-center gap-2 w-full">
                     <button
                         onClick={() => (actualOrder.length <= 0 ? null : makeOrder())}
@@ -92,9 +98,16 @@ function TablesSelect() {
                         onClick={() => (actualOrder.length <= 0 ? null : cancelOrder())}
                         className={`${actualOrder.length <= 0 ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'} bg-rojo px-4 py-2 rounded-md text-rosado-10`}>Remove Order</button>
                 </div>
+                </>}
             </div>
         </div>
     )
 }
 
+/*
+{
+    actualOrder.length <= 0 && <h2 className="text-2xl font-bold text-center ">
+        Add some item to your order or GoBack
+    </h2>
+}*/
 export default TablesSelect
