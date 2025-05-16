@@ -14,6 +14,13 @@ function CardsContainer() {
     const { data } = useProduct();
     const pendingOrders = orderCart.length;
 
+
+    const handleMesaClick = (mesa) => {
+        console.log(mesa);
+        
+    };
+
+
    const salida = data.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
     const mesas = [...new Set(orderCart.map(order => order.table))].sort();
 
@@ -24,11 +31,17 @@ function CardsContainer() {
                <ModalOrderConfirm option={modalOption} />
             <div className="lg:col-span-4">
                 <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
-                <h3 className="text-base font-cinco text-rosado-90"> Pending {pendingOrders} Orders "CardsContainer"</h3>
-                <h3 className="text-base font-cinco text-rosado-90">  {mesas.join(", ")} Mesas "CardsContainer"</h3>
-
-
-                <div className="lg:grid lg:grid-cols-3 w-full">
+                <div className="flex flex-wrap items-center py-2 gap-2">
+                  {pendingOrders} tables with pending orders:
+                    {mesas.map((mesa, index) => (
+                        <button
+                            key={index}
+                            className="px-3 py-1 text-sm font-siete border rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            onClick={() => handleMesaClick(mesa)}>
+                            #{mesa}
+                        </button>
+                    ))}
+                    </div>                <div className="lg:grid lg:grid-cols-3 w-full">
                     {salida && salida.map((item, index) => (
                         <Card id={item.id} numberId={index + 1} key={index} item={item} />
                     ))}

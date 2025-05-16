@@ -7,6 +7,7 @@ export const TablesProvider = ({ children }) => {
     const [tableActual, setTableActual] = useState();
     const [seleccionable, setSeleccionable] = useState(true);
 
+    
     const tables = [
         { id: 1, name: 'Table 1' },
         { id: 2, name: 'Table 2' },

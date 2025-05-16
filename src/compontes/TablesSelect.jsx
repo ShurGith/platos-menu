@@ -18,7 +18,6 @@ function TablesSelect() {
         });
     }
 
-
     function makeOrder() { //Resetea los botones 
         comumAction();
         addOrUpdateOrder(tableActual, actualOrder)
@@ -106,10 +105,4 @@ function TablesSelect() {
     )
 }
 
-/*
-{
-    actualOrder.length <= 0 && <h2 className="text-2xl font-bold text-center ">
-        Add some item to your order or GoBack
-    </h2>
-}*/
 export default TablesSelect
