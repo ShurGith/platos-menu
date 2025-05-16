@@ -14,12 +14,6 @@ export const OrderProvider = ({ children }) => {
     });
     const { tableActual } = useTablesContext();
     const [actualOrder, setActualOrder] = useState([]);
-  //  const [thisOrder, setThisOrder] = useState(false)
-   /* function removeItem(id) {
-        setOrderCart((prev) => prev.filter((item) => !(item.id === id && item.table === tableActual)));
-        document.getElementById(id).querySelector('img').classList.remove('border-2', 'border-rosado-50')
-    }
- */
 
     const hayData = actualOrder && actualOrder.length > 0;
     const totalItems = 1
@@ -39,6 +33,7 @@ export const OrderProvider = ({ children }) => {
 
     useEffect(() => {
         setActualOrder(getOrderByTable(tableActual).item || []);
+       // setActualOrder( actualOrder.sort((a, b) => a.id - b.id))
     }, [ tableActual]);
 
 

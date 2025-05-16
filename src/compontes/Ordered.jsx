@@ -2,12 +2,12 @@ import { useOrderContext } from "../context/OrderContext";
 
 function Ordered() {
     const { actualOrder, hayData, totalPay,setOpenModal } = useOrderContext();
-
+    const data = actualOrder.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
     return (
         <div className="flex flex-col gap-4 w-full text-main lg:px-6">
             {hayData &&
                 <div className="flex flex-col gap-4 w-full px-6 lg:p-2">
-                    {actualOrder.map((item) => (
+                    {data.map((item) => (
                         <div key={item.name} className="flex w-full flex-col font-cuatro border-b text-sm border-rosado-10 py-2">
                                 <p className="font-siete">{item.name}</p>
                                 <div className="flex items-center justify-between text-rosado-40 ">

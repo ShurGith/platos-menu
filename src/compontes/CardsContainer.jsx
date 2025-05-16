@@ -11,7 +11,12 @@ function CardsContainer() {
     const { counter } = useOrderContext();
     const { tableActual } = useTablesContext();
     const { data } = useProduct();
+    //const salida = data
+   // console.log(salida);
+  
+   const salida = data.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
 
+    //console.log(salida);
     return <>
         {/*   <ModalOrder /> */}
 
@@ -20,7 +25,7 @@ function CardsContainer() {
             <div className="lg:col-span-4">
                 <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
                 <div className="lg:grid lg:grid-cols-3 w-full">
-                    {data && data.map((item, index) => (
+                    {salida && salida.map((item, index) => (
                         <Card id={item.id} numberId={index + 1} key={index} item={item} />
                     ))}
                 </div>
