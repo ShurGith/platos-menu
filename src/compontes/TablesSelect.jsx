@@ -1,5 +1,6 @@
 import { useOrderContext } from "../context/OrderContext";
-import { useTablesContext } from "../context/TablesContext";
+import { useTablesContext } from "../context/TablesContext"; 
+import { Icon } from '@iconify-icon/react';
 
 function TablesSelect() {
     const { tables, setTableActual, tableActual, seleccionable, setSeleccionable } = useTablesContext();
@@ -70,9 +71,10 @@ function TablesSelect() {
                 <div className=" grid max-w-2xl grid-cols-3 gap-2">
                     {tables.map((table) => (
                         <button key={table.id} id={table.id} data-type={`table`}
-                            className={`relative text-sm gap-2 flex items-center px-8 py-4 w-fit rounded-md cursor-pointer bg-rosado-50 text-rosado-10`}
+                            className={`relative text-lg gap-2 flex items-center px-8 py-4 w-fit rounded-md cursor-pointer bg-rosado-50 text-rosado-10`}
                             onClick={(e) => handleTable(e.target, table)}>
-                            {table.name}
+                            <Icon icon="ic:sharp-table-restaurant" width="24" height="24" />
+                            # {table.id}
                         </button>
                     ))}
                 </div>
