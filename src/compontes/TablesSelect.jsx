@@ -7,18 +7,31 @@ function TablesSelect() {
 
     const orderAction = document.getElementById('order-action')
 
-    function makeOrder() { //Resetea los botones 
+    function comumAction() {
         document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
             elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
             elemento.classList.add('cursor-pointer', "bg-rosado-50")
             orderAction.classList.toggle('hidden')
         });
+    }
 
-        addOrUpdateOrder(tableActual, actualOrder)
+
+    function makeOrder() { //Resetea los botones 
+       if( actualOrder.length <= 0 ) return 
+        comumAction();
+
+         addOrUpdateOrder(tableActual, actualOrder)
         setSeleccionable(true)
         setActualOrder([])
-        setTableActual(null);    
+        setTableActual(null);
     }
+
+    function goBack() {
+      comumAction();
+        setSeleccionable(true)
+        setTableActual(null);
+    }
+
 
     function cancelOrder() {//Resetea los botones y elimina el pedido de la mesa actual
         setActualOrder([]);
@@ -28,28 +41,23 @@ function TablesSelect() {
         deleteOrder(tableActual)
     }
 
+    function handleTable(clickado, table) { //Activacion de la mesa
+        if (!seleccionable) return
+       comumAction();
+        if (Number(clickado.id) === table.id) {
+            clickado.classList.remove('bg-rosado-50', 'opacity-20')
+            clickado.classList.add('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2')
+        }
+        setSeleccionable(false)
+        setTableActual(table.id);
+    }
+
     function consolea() {
         console.clear()
         console.log("seleccionable:", seleccionable)
         console.log("tableActual: ", tableActual)
         console.log("orderCart: ", orderCart)
         console.log("actualOrder: ", actualOrder)
-    }
-
-    function handleTable(clickado, table) { //Activacion de la mesa
-        if (!seleccionable) return
-
-        document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
-            elemento.classList.remove('cursor-pointer')
-            elemento.classList.add('opacity-20', 'cursor-not-allowed')
-            orderAction.classList.toggle('hidden')
-            if (Number(clickado.id) === table.id) {
-                clickado.classList.remove('bg-rosado-50', 'opacity-20')
-                clickado.classList.add('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2')
-            }
-            setSeleccionable(false)
-            setTableActual(table.id);
-        });
     }
 
     return (
@@ -73,10 +81,13 @@ function TablesSelect() {
                 <div className="flex justify-center gap-2 w-full">
                     <button
                         onClick={() => makeOrder()}
-                        className='bg-verde cursor-pointer px-4 py-2 rounded-md text-rosado-10'>Make Order</button>
+                        className={`${actualOrder.length === 0 ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'} bg-verde  px-4 py-2 rounded-md text-rosado-10`}>Make Order</button>
+                    <button
+                        onClick={() => goBack()}
+                        className='bg-blue-400 cursor-pointer px-4 py-2 rounded-md text-rosado-10'>Go Back</button>
                     <button
                         onClick={() => cancelOrder()}
-                        className='bg-rojo cursor-pointer px-4 py-2 rounded-md text-rosado-10'>Cancel Order</button>
+                        className='bg-rojo cursor-pointer px-4 py-2 rounded-md text-rosado-10'>Remove Order</button>
                 </div>
             </div>
         </div>

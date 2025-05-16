@@ -1,11 +1,8 @@
 import { useOrderContext } from "../context/OrderContext";
 
 function Ordered() {
-    const { actualOrder, hayData, totalPay, setOpenModal, setActualOrder } = useOrderContext();
-    const removeThisItem = (id) => {
-        setActualOrder(prev => prev.filter(item => item.id !== id))
-    }
-    
+    const { actualOrder, hayData, totalPay, setOpenModal, removeThisItem } = useOrderContext();
+    //Ordenar los items pedidos por nombre 
     const data = actualOrder.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
 
     return (

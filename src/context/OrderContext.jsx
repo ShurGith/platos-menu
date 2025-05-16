@@ -57,7 +57,11 @@ export const OrderProvider = ({ children }) => {
         console.log("Pedido actualizado:", tableNumber, item);
         
     };
-
+    
+    //Eliminar un item desde la carta
+    const removeThisItem = (id) => {
+        setActualOrder(prev => prev.filter(item => item.id !== id))
+    }
 
     useEffect(() => {
         setCounter(
@@ -72,7 +76,7 @@ export const OrderProvider = ({ children }) => {
             counter, setCounter,
             actualOrder, setActualOrder,
             openModal, setOpenModal, hayData, totalItems, totalPay,
-            getOrderByTable,
+            getOrderByTable, removeThisItem,
             addOrUpdateOrder, deleteOrder,
         }}>
             {children}
