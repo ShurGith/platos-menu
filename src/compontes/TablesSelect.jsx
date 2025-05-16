@@ -3,7 +3,7 @@ import { useTablesContext } from "../context/TablesContext";
 
 function TablesSelect() {
     const { tables, setTableActual, tableActual, seleccionable, setSeleccionable } = useTablesContext();
-    const{ setActualOrder, orderCart, actualOrder, addOrUpdateOrder } = useOrderContext();
+    const { setActualOrder, orderCart, actualOrder, addOrUpdateOrder, deleteOrder } = useOrderContext();
 
     const orderAction = document.getElementById('order-action')
 
@@ -25,6 +25,7 @@ function TablesSelect() {
         setSeleccionable(true)
         setTableActual(null);
         makeOrder() //Resetea los botones
+        deleteOrder(tableActual)
     }
 
     function consolea() {

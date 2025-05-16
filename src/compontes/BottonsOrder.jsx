@@ -35,12 +35,9 @@ function BottonsOrder({ name, price, image, id }) {
           name: name, cantidad: quantity,
           price: price, total: total.toFixed(2),
           image: image
-        }]//.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
+        }]
       }
     });
-   
-  //  const laOrden = actualOrder.sort((a, b) => a.id - b.id);
- // setActualOrder(laOrden)
   }
 
   const removeThis = (id) => {

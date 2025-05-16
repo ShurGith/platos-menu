@@ -1,8 +1,13 @@
 import { useOrderContext } from "../context/OrderContext";
 
 function Ordered() {
-    const { actualOrder, hayData, totalPay,setOpenModal } = useOrderContext();
+    const { actualOrder, hayData, totalPay, setOpenModal, setActualOrder } = useOrderContext();
+    const removeThisItem = (id) => {
+        setActualOrder(prev => prev.filter(item => item.id !== id))
+    }
+    
     const data = actualOrder.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
+
     return (
         <div className="flex flex-col gap-4 w-full text-main lg:px-6">
             {hayData &&
@@ -17,7 +22,7 @@ function Ordered() {
                                         <p className="font-cinco">${item.total}</p>
                                     </div>
                                     <button className="size-4 rounded-full border flex items-center justify-center cursor-pointer"
-                                    onClick={() => removeItem(item.id)}
+                                    onClick={() => removeThisItem(item.id)}
                                     >
                                         <img src="/assets/images/icon-remove-item.svg" alt="" />
                                     </button>

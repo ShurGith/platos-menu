@@ -8,22 +8,26 @@ import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
 
 function CardsContainer() {
-    const { counter } = useOrderContext();
+    const { counter , totalPay, orderCart} = useOrderContext();
     const { tableActual } = useTablesContext();
     const { data } = useProduct();
-    //const salida = data
-   // console.log(salida);
-  
-   const salida = data.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
+    const pendingOrders = orderCart.length;
+    console.log("totalPay: ", totalPay);
+    
 
-    //console.log(salida);
-    return <>
-        {/*   <ModalOrder /> */}
+    
+    console.log("pendingOrders: ", pendingOrders);
+    
+   const salida = data.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
 
+    return (
         <div className="w-full  flex flex-col-reverse  lg:grid lg:grid-cols-6 gap-2 px-2 lg:px-18 py-6 relative overflow-hidden">
-
+            {/*   <ModalOrder /> */}
             <div className="lg:col-span-4">
                 <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
+                <h3 className="text-base font-cinco text-rosado-90"> Pending {pendingOrders} Orders</h3>
+
+
                 <div className="lg:grid lg:grid-cols-3 w-full">
                     {salida && salida.map((item, index) => (
                         <Card id={item.id} numberId={index + 1} key={index} item={item} />
@@ -53,7 +57,7 @@ function CardsContainer() {
                 </div>
             </div>
         </div>
-    </>;
+    )
 }
 
 export default CardsContainer
