@@ -2,7 +2,7 @@ import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
 
 function TablesSelect() {
-    const { tables, setTableActual, tableActual, seleccionable, setSeleccionable, intoNow, setIntoNow } = useTablesContext();
+    const { tables, setTableActual, tableActual, seleccionable, setSeleccionable } = useTablesContext();
     const{ setActualOrder, orderCart, actualOrder, addOrUpdateOrder } = useOrderContext();
 
     const orderAction = document.getElementById('order-action')
@@ -17,15 +17,13 @@ function TablesSelect() {
         addOrUpdateOrder(tableActual, actualOrder)
         setSeleccionable(true)
         setActualOrder([])
-        setTableActual(null);
-        setIntoNow(false)        
+        setTableActual(null);    
     }
 
     function cancelOrder() {//Resetea los botones y elimina el pedido de la mesa actual
         setActualOrder([]);
         setSeleccionable(true)
         setTableActual(null);
-        setIntoNow(false)        
         makeOrder() //Resetea los botones
     }
 
@@ -35,7 +33,6 @@ function TablesSelect() {
         console.log("tableActual: ", tableActual)
         console.log("orderCart: ", orderCart)
         console.log("actualOrder: ", actualOrder)
-        console.log("intoNow: ", intoNow)
     }
 
     function handleTable(clickado, table) { //Activacion de la mesa
