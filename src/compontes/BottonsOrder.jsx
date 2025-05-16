@@ -60,7 +60,6 @@ const removeThis = (id) => {
   const addOrderItem = (laId, pasado = false) => {
     setCantidad(cantidad + 1)
     setIntoNow(true)
-    //if (tableActual && id)
     toOrder(laId, name, cantidad + 1, price, image)
     !pasado && meteClases(laId, true)
   }
@@ -75,7 +74,6 @@ const removeThis = (id) => {
     }
   }
   useEffect(() => {
-  
     if (actualOrder.some(item => item.id === id)) {
       setCantidad( actualOrder.find(item => item.id === id).cantidad )
       meteClases(id, true)
