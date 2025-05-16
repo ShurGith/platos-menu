@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react'
 import { useOrderContext } from '../context/OrderContext';
 import { useTablesContext } from '../context/TablesContext';
 
-function BottonsOrder({ name, price, image, id, quantity }) {
+function BottonsOrder({ name, price, image, id }) {
   const { actualOrder, setActualOrder } = useOrderContext();
 
-  const { intoNow, setIntoNow, tableActual } = useTablesContext();
+  const { tableActual } = useTablesContext();
   const [cantidad, setCantidad] = useState(0)
 
   const meteClases = (laId, accion) => {
@@ -17,7 +17,6 @@ function BottonsOrder({ name, price, image, id, quantity }) {
   useEffect(() => {
     setCantidad(0)
   }, [actualOrder]);
-
 
   const toOrder = (id, name, quantity, price, image) => {
     const total = quantity * price;
@@ -41,25 +40,12 @@ function BottonsOrder({ name, price, image, id, quantity }) {
     });
   }
 
-  
-  useEffect(() => {
-    setIntoNow(actualOrder.some(item => item.id === id))
-  }, [toOrder])
-
-  
-
-const removeThis = (id) => {
-  setActualOrder(prev => prev.filter(item => item.id !== id))
- /* const datosFiltrados = datos.filter(item => item.table_id !== 1);
-
-  // Guarda el array filtrado de nuevo en localStorage
-  localStorage.setItem(clave, JSON.stringify(datosFiltrados));*/
-}
-
+  const removeThis = (id) => {
+    setActualOrder(prev => prev.filter(item => item.id !== id))
+  }
 
   const addOrderItem = (laId, pasado = false) => {
     setCantidad(cantidad + 1)
-    setIntoNow(true)
     toOrder(laId, name, cantidad + 1, price, image)
     !pasado && meteClases(laId, true)
   }
@@ -68,14 +54,14 @@ const removeThis = (id) => {
     setCantidad(cantidad - 1)
     toOrder(laId, name, cantidad - 1, price, image) //
     if (cantidad <= 1) {
-      setIntoNow(false)
       removeThis(laId)
       meteClases(laId, false)
     }
   }
+
   useEffect(() => {
     if (actualOrder.some(item => item.id === id)) {
-      setCantidad( actualOrder.find(item => item.id === id).cantidad )
+      setCantidad(actualOrder.find(item => item.id === id).cantidad)
       meteClases(id, true)
     }
     else {
@@ -88,7 +74,7 @@ const removeThis = (id) => {
   return (
     <div className="absolute -bottom-5 left-0 w-full flex justify-center">
 
-      {!actualOrder.some(item => item.id === id) &&  tableActual && <div
+      {!actualOrder.some(item => item.id === id) && tableActual && <div
         className='bg-rosado-5 py-2 px-6 rounded-full flex items-center cursor-pointer
     border border-rosado-30 gap-4'
         onClick={() => addOrderItem(id)}>
@@ -96,7 +82,7 @@ const removeThis = (id) => {
         <h6 className='text-rosado-90 text-sm'>Add to Cart</h6>
       </div>}
 
-      {actualOrder.some(item => item.id === id)  && <div 
+      {actualOrder.some(item => item.id === id) && <div
         className='bg-rojo py-2 px-2 rounded-full flex items-center
     border border-rosado-40 gap-12'>
         <img
