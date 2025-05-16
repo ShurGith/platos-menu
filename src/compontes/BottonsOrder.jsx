@@ -41,6 +41,21 @@ function BottonsOrder({ name, price, image, id, quantity }) {
     });
   }
 
+  
+  useEffect(() => {
+    setIntoNow(actualOrder.some(item => item.id === id))
+  }, [toOrder])
+
+  
+
+const removeThis = (id) => {
+  setActualOrder(prev => prev.filter(item => item.id !== id))
+ /* const datosFiltrados = datos.filter(item => item.table_id !== 1);
+
+  // Guarda el array filtrado de nuevo en localStorage
+  localStorage.setItem(clave, JSON.stringify(datosFiltrados));*/
+}
+
 
   const addOrderItem = (laId, pasado = false) => {
     setCantidad(cantidad + 1)
@@ -55,29 +70,27 @@ function BottonsOrder({ name, price, image, id, quantity }) {
     toOrder(laId, name, cantidad - 1, price, image) //
     if (cantidad <= 1) {
       setIntoNow(false)
-      //  removeItem(laId)
+      removeThis(laId)
       meteClases(laId, false)
     }
   }
-
   useEffect(() => {
-    if (quantity > 0) {
-      setCantidad(quantity)
+  
+    if (actualOrder.some(item => item.id === id)) {
+      setCantidad( actualOrder.find(item => item.id === id).cantidad )
       meteClases(id, true)
-      setIntoNow(true)
-      console.log("tableActual: ", tableActual, "quantity", quantity);
     }
     else {
-      setIntoNow(false)
+      setCantidad(0)
       meteClases(id, false)
-      console.log("tableActual: ", tableActual, "quantity", quantity);
     }
-  }, [ quantity, tableActual]);
+  }, [actualOrder]);
 
   //? ****  ####   Card Bottons  #### *******/
   return (
     <div className="absolute -bottom-5 left-0 w-full flex justify-center">
-      {tableActual &&  !intoNow && <div
+
+      {!actualOrder.some(item => item.id === id) &&  tableActual && <div
         className='bg-rosado-5 py-2 px-6 rounded-full flex items-center cursor-pointer
     border border-rosado-30 gap-4'
         onClick={() => addOrderItem(id)}>
@@ -85,7 +98,7 @@ function BottonsOrder({ name, price, image, id, quantity }) {
         <h6 className='text-rosado-90 text-sm'>Add to Cart</h6>
       </div>}
 
-      {intoNow  && <div 
+      {actualOrder.some(item => item.id === id)  && <div 
         className='bg-rojo py-2 px-2 rounded-full flex items-center
     border border-rosado-40 gap-12'>
         <img
