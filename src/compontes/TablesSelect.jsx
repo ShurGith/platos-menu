@@ -7,27 +7,30 @@ function TablesSelect() {
 
     const orderAction = document.getElementById('order-action')
 
-    function comumAction() {
+    function comumAction(desactivar = false) {
         document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
-            elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
-            elemento.classList.add('cursor-pointer', "bg-rosado-50")
+            if (desactivar) {
+                elemento.classList.add('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
+                elemento.classList.remove('cursor-pointer', "bg-rosado-50")
+            }else{
+                elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
+                elemento.classList.add('cursor-pointer', "bg-rosado-50")
+            }
             orderAction.classList.toggle('hidden')
         });
     }
 
 
     function makeOrder() { //Resetea los botones 
-       if( actualOrder.length <= 0 ) return 
         comumAction();
-
-         addOrUpdateOrder(tableActual, actualOrder)
+        addOrUpdateOrder(tableActual, actualOrder)
         setSeleccionable(true)
         setActualOrder([])
         setTableActual(null);
     }
 
     function goBack() {
-      comumAction();
+        comumAction();
         setSeleccionable(true)
         setTableActual(null);
     }
@@ -43,7 +46,7 @@ function TablesSelect() {
 
     function handleTable(clickado, table) { //Activacion de la mesa
         if (!seleccionable) return
-       comumAction();
+        comumAction(true);
         if (Number(clickado.id) === table.id) {
             clickado.classList.remove('bg-rosado-50', 'opacity-20')
             clickado.classList.add('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2')
@@ -80,14 +83,14 @@ function TablesSelect() {
                 <h2 className="text-2xl font-bold">Make Action</h2>
                 <div className="flex justify-center gap-2 w-full">
                     <button
-                        onClick={() => makeOrder()}
+                        onClick={() => (actualOrder.length <= 0 ? null : makeOrder())}
                         className={`${actualOrder.length === 0 ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'} bg-verde  px-4 py-2 rounded-md text-rosado-10`}>Make Order</button>
                     <button
                         onClick={() => goBack()}
                         className='bg-blue-400 cursor-pointer px-4 py-2 rounded-md text-rosado-10'>Go Back</button>
                     <button
-                        onClick={() => cancelOrder()}
-                        className='bg-rojo cursor-pointer px-4 py-2 rounded-md text-rosado-10'>Remove Order</button>
+                        onClick={() => (actualOrder.length <= 0 ? null : cancelOrder())}
+                        className={`${actualOrder.length <= 0 ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'} bg-rojo px-4 py-2 rounded-md text-rosado-10`}>Remove Order</button>
                 </div>
             </div>
         </div>

@@ -12,13 +12,9 @@ function CardsContainer() {
     const { tableActual } = useTablesContext();
     const { data } = useProduct();
     const pendingOrders = orderCart.length;
-    console.log("totalPay: ", totalPay);
-    
 
-    
-    console.log("pendingOrders: ", pendingOrders);
-    
    const salida = data.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
+    const mesas = [...new Set(orderCart.map(order => order.table))].sort();
 
     return (
         <div className="w-full  flex flex-col-reverse  lg:grid lg:grid-cols-6 gap-2 px-2 lg:px-18 py-6 relative overflow-hidden">
@@ -26,6 +22,7 @@ function CardsContainer() {
             <div className="lg:col-span-4">
                 <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
                 <h3 className="text-base font-cinco text-rosado-90"> Pending {pendingOrders} Orders "CardsContainer"</h3>
+                <h3 className="text-base font-cinco text-rosado-90">  {mesas.join(", ")} Meas "CardsContainer"</h3>
 
 
                 <div className="lg:grid lg:grid-cols-3 w-full">
