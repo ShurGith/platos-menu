@@ -17,6 +17,13 @@ export const OrderProvider = ({ children }) => {
     });
     const { tableActual } = useTablesContext();
 
+    useEffect(() => {
+        setCounter(
+            actualOrder.reduce((acc, item) => item.cantidad ? acc + item.cantidad : acc, 0)
+        );
+
+    }, [actualOrder, tableActual]);
+
     const hayData = actualOrder && actualOrder.length > 0;
     const totalItems = 1
     const totalPay = hayData && actualOrder.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
@@ -63,12 +70,6 @@ export const OrderProvider = ({ children }) => {
         setActualOrder(prev => prev.filter(item => item.id !== id))
     }
 
-    useEffect(() => {
-        setCounter(
-            actualOrder.reduce((acc, item) => item.cantidad ? acc + item.cantidad : acc, 0)
-        );
-
-    }, [actualOrder, tableActual]);
 
     return (
         <OrderContext.Provider value={{
